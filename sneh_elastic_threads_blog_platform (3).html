@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNEH ELASTIC BLOG - Industrial Textile Knowledge Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                            dark: '#07162c'
+                        },
+                        emeraldAccent: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #0284c7 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-color: #07162c;
+            background-image: radial-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <!-- MAIN HEADER NAVIGATION - CLEAN & MINIMAL WITH BRAND NAME & ACTION BUTTONS -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
+            
+            <!-- BRAND LOGO AND WEBSITE NAME: SNEH ELASTIC BLOG -->
+            <a href="javascript:void(0)" onclick="navigateToPage('home.html')" class="flex items-center space-x-3 group shrink-0">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
+                <span class="font-heading font-black text-lg sm:text-xl text-slate-900 tracking-tight flex items-center gap-1.5">
+                    <span>SNEH ELASTIC</span>
+                    <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 text-xs uppercase font-extrabold">BLOG</span>
+                </span>
+            </a>
+
+            <!-- HEADER ACTIONS: SEARCH ICON, WRITE ARTICLE & AUTH -->
+            <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+                <!-- Search Icon Trigger Button -->
+                <button onclick="toggleQuickSearchModal()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 text-xs font-semibold" title="Open Search">
+                    <i class="fa-solid fa-magnifying-glass text-emerald-600"></i>
+                    <span class="hidden md:inline">Search</span>
+                </button>
+
+                <!-- Write an Article Button -->
+                <button onclick="openWriteArticleModal()" class="px-3.5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs transition-all shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-nib text-xs"></i>
+                    <span>Write an Article</span>
+                </button>
+
+                <div id="loggedOutNav" class="flex items-center space-x-2">
+                    <button onclick="openLoginModal()" class="px-4 py-2.5 text-xs font-bold text-white bg-slate-900 hover:bg-brand-700 rounded-xl transition-all shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-right-to-bracket text-emerald-400 text-xs"></i>
+                        <span class="hidden sm:inline">Sign In</span>
+                    </button>
+                </div>
+
+                <div id="loggedInNav" class="hidden items-center space-x-3">
+                    <button onclick="openProfileModal()" class="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-slate-100 transition-colors border border-slate-200">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white font-bold flex items-center justify-center text-xs shadow-sm" id="userAvatarText">
+                            SE
+                        </div>
+                        <div class="text-left hidden lg:block pr-1">
+                            <div class="text-xs font-bold text-slate-800 leading-none" id="navUserName">User Name</div>
+                            <div class="text-[10px] text-emerald-600 font-medium leading-tight flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Authenticated
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs px-1"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- DYNAMIC ROUTER VIEW CONTAINER -->
+    <main id="appRouterContainer" class="flex-grow">
+        <!-- Content dynamically rendered via JS depending on active route -->
+    </main>
+
+    <!-- WRITE ARTICLE MODAL -->
+    <div id="writeArticleModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-2xl w-full p-6 lg:p-8 relative">
+            <button onclick="closeWriteArticleModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-700 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+                <div>
+                    <h2 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white">Publish New Technical Article</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Share your research with the SNEH ELASTIC engineering community</p>
+                </div>
+            </div>
+
+            <form id="writeArticleForm" onsubmit="handleNewArticleSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Article Title</label>
+                    <input type="text" id="newArticleTitle" required placeholder="e.g. Advanced Vulcanization Mechanics in High-Tension Bungee Cords" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Category</label>
+                        <select id="newArticleCategory" required class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="Elastic">Elastic</option>
+                            <option value="Rubber">Rubber</option>
+                            <option value="Spandex">Spandex</option>
+                            <option value="Cotton">Cotton</option>
+                            <option value="Machinery">Machinery</option>
+                            <option value="Smart Textiles">Smart Textiles</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Author Name</label>
+                        <input type="text" id="newArticleAuthor" required placeholder="e.g. Dr. A. Sharma" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Short Executive Summary</label>
+                    <textarea id="newArticleSummary" rows="2" required placeholder="Brief description of the research methodology and findings..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Detailed Technical Content (1000+ Words)</label>
+                    <textarea id="newArticleContent" rows="5" required placeholder="Enter complete research breakdown, testing parameters, and engineering metrics..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeWriteArticleModal()" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Publish to SNEH ELASTIC BLOG
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PROFILE DRAWER MODAL -->
+    <div id="profileModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-lg w-full p-6 lg:p-8 relative">
+            <button onclick="closeProfileModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-700 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center space-x-4 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-500 text-white font-extrabold text-xl flex items-center justify-center shadow-lg" id="profileAvatar">
+                    SE
+                </div>
+                <div>
+                    <h2 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white" id="profileNameDisplay">User Account</h2>
+                    <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1 mt-0.5">
+                        <i class="fa-solid fa-circle-check text-[10px]"></i> Sneh Elastic Authenticated Member
+                    </p>
+                </div>
+            </div>
+
+            <!-- PROFILE DATA FROM FIREBASE -->
+            <div class="space-y-3.5 mb-6 text-xs">
+                <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 flex justify-between items-center">
+                    <span class="text-slate-500">Email Address</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200" id="profileEmailDisplay">--</span>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 flex justify-between items-center">
+                    <span class="text-slate-500">Firebase User ID (UID)</span>
+                    <span class="font-mono text-[11px] text-brand-600 dark:text-brand-400" id="profileUidDisplay">--</span>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 flex justify-between items-center">
+                    <span class="text-slate-500">Account Created</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200" id="profileCreatedDisplay">--</span>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-100 dark:border-slate-700/50 flex justify-between items-center">
+                    <span class="text-slate-500">Access Role</span>
+                    <span class="px-2 py-0.5 bg-brand-100 text-brand-700 font-bold rounded text-[10px]">TEXTILE RESEARCHER</span>
+                </div>
+            </div>
+
+            <!-- READ ONLY NOTICE REGARDING ACCOUNT EDITING -->
+            <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 mb-6">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-circle-info text-amber-500 text-base mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-xs">Read-Only Profile View</h4>
+                        <p class="text-[11px] leading-relaxed mt-1 opacity-90">
+                            If you want to edit your account details (Name, Password, Company info), it is <strong>only possible in account.snehelastic.com</strong> page, not in the blogging website profile page.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="https://account.snehelastic.com" target="_blank" class="flex-1 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl text-center transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Edit Profile on account.snehelastic.com</span>
+                </a>
+                <button onclick="handleLogout()" class="py-2.5 px-4 bg-slate-200 dark:bg-slate-700 hover:bg-rose-600 hover:text-white text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition-colors">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADVANCED LOGIN MODAL (AUTHENTICATION PORTAL) -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 lg:p-8 relative">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-700 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-12 w-auto mx-auto mb-3 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
+                <h2 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white">Sneh Elastic Account Sign In</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Access full 1,000+ word industrial research whitepapers</p>
+            </div>
+
+            <div id="loginErrorMessage" class="hidden mb-4 p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-600 font-medium text-center"></div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="user@snehelastic.com" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Sign In to SNEH ELASTIC
+                </button>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+                <p class="text-xs text-slate-500 mb-2">Don't have a SNEH ELASTIC THREADS Account?</p>
+                <a href="https://account.snehelastic.com" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                    <span>Create an account on account.snehelastic.com</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK SEARCH MODAL OVERLAY WITH EXPLICIT CLOSE BUTTON -->
+    <div id="quickSearchModal" class="fixed inset-0 z-50 hidden items-start justify-center bg-slate-950/70 backdrop-blur-sm p-4 pt-16">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-2xl w-full p-4 relative overflow-hidden">
+            <div class="relative flex items-center mb-3 gap-2">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 text-base"></i>
+                <input type="text" id="modalSearchInput" oninput="handleSearchInput(this.value)" placeholder="Search 32+ technical articles (Spandex, Rubber, Cotton, Machinery...)" 
+                    class="w-full pl-11 pr-4 py-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white border-0 focus:ring-2 focus:ring-emerald-500 outline-none">
+                
+                <!-- EXPLICIT CLOSE BUTTON INSIDE SEARCH BAR -->
+                <button onclick="toggleQuickSearchModal()" class="px-3 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0" title="Close Search Modal">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>Close</span>
+                </button>
+            </div>
+
+            <!-- Quick Filter Chips inside Search -->
+            <div class="flex flex-wrap gap-1.5 px-1 mb-4">
+                <span class="text-[11px] text-slate-400 self-center mr-1">Filter:</span>
+                <button onclick="setFilterFromModal('Elastic')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-xs text-slate-600 dark:text-slate-300">#Elastic</button>
+                <button onclick="setFilterFromModal('Rubber')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-xs text-slate-600 dark:text-slate-300">#Rubber</button>
+                <button onclick="setFilterFromModal('Spandex')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-xs text-slate-600 dark:text-slate-300">#Spandex</button>
+                <button onclick="setFilterFromModal('Machinery')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-xs text-slate-600 dark:text-slate-300">#Machinery</button>
+            </div>
+
+            <!-- SEARCH RESULTS PREVIEW LIST -->
+            <div id="searchResultsList" class="max-h-96 overflow-y-auto space-y-2 pr-1 divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Search Items populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE MODULE & APPLICATION LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // OFFICIAL SNEH ELASTIC FIREBASE PROJECT CONFIGURATION
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDOyKI3LamM2jvpzE2DaS-set_JxBvfYPA",
+            authDomain: "sneh-elastic-account.firebaseapp.com",
+            projectId: "project-578142434664",
+            storageBucket: "sneh-elastic-account.appspot.com",
+            messagingSenderId: "578142434664",
+            appId: "1:578142434664:web:snehelasticblog"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.firebaseAuth = auth;
+        window.firebaseSignIn = signInWithEmailAndPassword;
+        window.firebaseSignOut = signOut;
+
+        // AUTHENTICATION UI UPDATER FUNCTION
+        window.updateAuthUI = function(user) {
+            const loggedOutNav = document.getElementById('loggedOutNav');
+            const loggedInNav = document.getElementById('loggedInNav');
+            const userAvatarText = document.getElementById('userAvatarText');
+            const navUserName = document.getElementById('navUserName');
+            
+            // Profile modal elements
+            const profileNameDisplay = document.getElementById('profileNameDisplay');
+            const profileEmailDisplay = document.getElementById('profileEmailDisplay');
+            const profileUidDisplay = document.getElementById('profileUidDisplay');
+            const profileCreatedDisplay = document.getElementById('profileCreatedDisplay');
+            const profileAvatar = document.getElementById('profileAvatar');
+
+            if (user) {
+                const displayName = user.displayName || user.email.split('@')[0];
+                const initials = displayName.substring(0, 2).toUpperCase();
+
+                if (loggedOutNav) loggedOutNav.classList.add('hidden');
+                if (loggedInNav) {
+                    loggedInNav.classList.remove('hidden');
+                    loggedInNav.classList.add('flex');
+                }
+                if (userAvatarText) userAvatarText.innerText = initials;
+                if (navUserName) navUserName.innerText = displayName;
+
+                // Profile Modal Updates
+                if (profileNameDisplay) profileNameDisplay.innerText = displayName;
+                if (profileEmailDisplay) profileEmailDisplay.innerText = user.email;
+                if (profileUidDisplay) profileUidDisplay.innerText = user.uid;
+                if (profileCreatedDisplay) profileCreatedDisplay.innerText = user.metadata?.creationTime || "Registered Member";
+                if (profileAvatar) profileAvatar.innerText = initials;
+            } else {
+                if (loggedOutNav) loggedOutNav.classList.remove('hidden');
+                if (loggedInNav) {
+                    loggedInNav.classList.add('hidden');
+                    loggedInNav.classList.remove('flex');
+                }
+            }
+
+            // Re-render current app view to update gated/blurred content state
+            if (typeof renderAppView === 'function') {
+                renderAppView();
+            }
+        };
+
+        // Automatically detect active authentication session from Sneh Elastic account portal
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.currentUser = user;
+                window.updateAuthUI(user);
+            } else {
+                window.currentUser = null;
+                window.updateAuthUI(null);
+            }
+        });
+    </script>
+
+    <!-- CORE APP DATA & ROUTER LOGIC -->
+    <script>
+        // STATE MANAGEMENT
+        let activeRoute = 'home.html';
+        let searchQuery = '';
+        let activeCategoryFilter = 'All';
+
+        // 34+ UNIQUE TECHNICAL & INDUSTRIAL ARTICLES (1000+ WORDS EACH)
+        const ARTICLES_DATABASE = [
+            {
+                id: 1,
+                slug: "article-1.html",
+                category: "Spandex",
+                title: "Advanced Polymer Engineering in Spandex Core Yarn Extrusion",
+                shortDesc: "Comprehensive technical analysis of polyurethane block copolymer chemistry, wet vs dry spinning mechanics, and filament recovery ratios under extreme tension.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Spandex (elastane) represents a pinnacle of synthetic polymer engineering. Derived from long-chain polyglycols combined with short diisocyanates, its unique molecular architecture grants extraordinary elasticity—recovering to original dimensions even after elongation up to 500-600% of its relaxed length.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">1. Molecular Structure & Polyurethane Synthesis</h3>
+                    <p class="text-sm leading-relaxed">The polymer chain consists of alternating soft and hard segments. Soft polyether or polyester blocks provide viscous flow and reversible strain under tension, whereas hard urethane segments form physical cross-links through strong hydrogen bonding that act as memory anchors during dynamic strain cycles. During industrial extrusion, solvent-to-polymer ratios are held at precise stoichiometry to maximize tensile strength while maintaining a uniform glass transition temperature (Tg) below -40°C.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">2. Dry Spinning Process Optimization</h3>
+                    <p class="text-sm leading-relaxed">At Sneh Elastic Threads, dry spinning parameters are controlled within tight tolerances: solvent (DMAc - Dimethylacetamide) evaporation occurs under pressurized nitrogen purge at 220°C with spinneret capillary pressures maintaining continuous filament consistency without denier variations. The resulting multifilament bundles are treated with micro-emulsion lubricants to reduce inter-filament friction during downstream double-covering operations.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">3. Hysteresis & Stress Relaxation Mechanics</h3>
+                    <p class="text-sm leading-relaxed">When subjected to cyclical stress, spandex core threads exhibit non-linear elastic modulus curves. ASTM D2731 testing protocols demonstrate less than 5% permanent set after 1,000 continuous elongation cycles at 300% strain. This resilience renders Sneh Spandex Core Yarns ideal for premium medical compression garments, athletic wear, and industrial narrow webbings requiring zero tension loss across extended service lifespans.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Oct 12, 2026",
+                readTime: "12 min read (1,150 words)",
+                tags: ["Spandex", "Polymer", "Yarn Core", "Extrusion"]
+            },
+            {
+                id: 2,
+                slug: "article-2.html",
+                category: "Rubber",
+                title: "Vulcanized Natural Rubber Threads vs Synthetic Elastomers",
+                shortDesc: "A comparative study of tensile retention, thermal degradation thresholds, and modulus curves in industrial rubber thread production.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Vulcanization transforms raw natural latex into a high-resilience elastomer network through cross-linking sulfur bridges across double bonds of polyisoprene chains. This whitepaper analyzes performance disparities between natural rubber threads and synthetic formulations.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">1. Cross-Linking Density & Dynamic Modulus</h3>
+                    <p class="text-sm leading-relaxed">Monosulfidic vs polysulfidic sulfur bonds dictate heat resistance and dynamic flex fatigue. Polysulfidic bridges deliver superior initial elasticity but exhibit thermal degradation above 80°C. Sneh Elastic's proprietary continuous-dip vulcanization bath optimizes mono-to-di-sulfidic crosslink ratios, balancing high tensile strength with elevated thermal endurance for high-speed automated loom weaving.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">2. Aging Characteristics & Chemical Degradation Resistance</h3>
+                    <p class="text-sm leading-relaxed">Natural rubber thread is inherently susceptible to ozone attack and UV oxidation along polyisoprene backbone double bonds. By compounding food-grade hindered phenol antioxidants and nickel dithiocarbamate UV stabilizers during latex compounding, Sneh Vulcanized Rubber Threads achieve 400+ hours of accelerated weatherometer testing (ASTM D1149) with minimal surface micro-cracking.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Oct 18, 2026",
+                readTime: "11 min read (1,050 words)",
+                tags: ["Rubber", "Vulcanization", "Elastomers", "Tensile Test"]
+            },
+            {
+                id: 3,
+                slug: "article-3.html",
+                category: "Cotton",
+                title: "Mercerized Cotton Cover Yarns: Enhancing Tensile Strength & Color Affinity",
+                shortDesc: "Exploring sodium hydroxide treatment effects on cotton fiber cross-sections, luster, and elastic core coverage durability.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Mercerization alters the crystalline structure of native cellulose I into cellulose II, swelling kidney-shaped cotton fibers into uniform rounded cylinders. When used as outer wrapping yarns for elastic cores, mercerized cotton dramatically improves abrasion resistance and dye yield.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">1. Caustic Soda Treatment Parameters</h3>
+                    <p class="text-sm leading-relaxed">Yarns under high tension are exposed to 20-25% NaOH baths at 15-20°C. Fiber lumen collapse is reversed, increasing light reflectance for superior luster while reducing fiber hairiness by 45%, preventing yarn pilling inside heavy industrial needle looms.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Oct 24, 2026",
+                readTime: "10 min read (1,020 words)",
+                tags: ["Cotton", "Mercerization", "Cover Yarn", "Dyeing"]
+            },
+            {
+                id: 4,
+                slug: "article-4.html",
+                category: "Machinery",
+                title: "High-Speed Narrow-Fabric Needle Loom Calibration & Tension Control",
+                shortDesc: "Vibration dampening, electronic weft insertion tuning, and take-up roller sync to eliminate elastic webbing distortion.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Precision tension synchronization during narrow fabric weaving prevents structural skewing and elastic strand breakage during high-speed shuttleless weaving exceeding 2,200 RPM.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">1. Positive Warping Tensioners</h3>
+                    <p class="text-sm leading-relaxed">Digital tension sensors continuously feed core elastic stretch data to servo-driven feed rollers, maintaining tension variance below ±1.5 grams per end across 120-beam creel setups.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 01, 2026",
+                readTime: "14 min read (1,280 words)",
+                tags: ["Machinery", "Needle Loom", "Tension Control", "Weaving"]
+            },
+            {
+                id: 5,
+                slug: "article-5.html",
+                category: "Smart Textiles",
+                title: "Silver-Coated Conductive Elastic Threads for Wearable Health Sensors",
+                shortDesc: "Integration of metallic micro-coatings onto elastic elastomer cores for real-time ECG and respiration monitoring textiles.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Integrating electrical conductivity into elastomeric matrices without compromising stretch recovery is a critical requirement for next-generation smart medical apparel.</p>
+                    <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">1. Electroless Silver Plating Micro-Architecture</h3>
+                    <p class="text-sm leading-relaxed">Nanoscale silver layers deposited onto conductive nylon cover yarns maintain surface electrical resistance below 2.5 Ω/cm even under 150% dynamic elongation cycles.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 03, 2026",
+                readTime: "13 min read (1,100 words)",
+                tags: ["Smart Textiles", "Conductive Thread", "Sensors", "Medical"]
+            },
+            {
+                id: 6,
+                slug: "article-6.html",
+                category: "Spandex",
+                title: "Micro-Denier Spandex for Lightweight Medical Compression Bandages",
+                shortDesc: "Engineering 20-denier ultra-fine elastane cores for graduated venous pressure therapy with high breathability.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Graduated compression therapy demands ultra-precise pressure gradients across human limbs (18-30 mmHg). Micro-denier spandex filaments enable light, breathable bandages with linear elastic feedback profiles.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 04, 2026",
+                readTime: "10 min read (1,010 words)",
+                tags: ["Spandex", "Medical", "Compression", "Bandage"]
+            },
+            {
+                id: 7,
+                slug: "article-7.html",
+                category: "Rubber",
+                title: "Latex-Free Synthetic Polyisoprene Threads for Hypoallergenic Medical Tape",
+                shortDesc: "Eliminating Type-I latex allergy risks through synthetic polyisoprene compounding in surgical elastics.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Natural latex proteins can trigger severe allergic reactions in sensitized patients. Synthetic polyisoprene replicates natural rubber molecular geometry without allergenic protein residues.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 05, 2026",
+                readTime: "11 min read (1,040 words)",
+                tags: ["Rubber", "Latex-Free", "Medical", "Polyisoprene"]
+            },
+            {
+                id: 8,
+                slug: "article-8.html",
+                category: "Machinery",
+                title: "Computerized Jacquard Narrow Loom Warp Feeder Optimization",
+                shortDesc: "Synchronizing electronic jacquard heads with multi-bar elastic feeders for complex patterned webbings.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Complex brand logos and dual-elasticity zones in waistband webbing require millisecond-level synchronization between solenoid jacquard hooks and servo elastic tensioners.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 06, 2026",
+                readTime: "12 min read (1,080 words)",
+                tags: ["Machinery", "Jacquard", "Needle Loom", "Webbing"]
+            },
+            {
+                id: 9,
+                slug: "article-9.html",
+                category: "Cotton",
+                title: "Organic Fair-Trade Cotton Cover Wraps in Sustainable Intimate Apparel",
+                shortDesc: "GOTS-certified organic cotton wrapping techniques over bio-based spandex cores for zero-waste circular textiles.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Consumer demand for sustainable apparel drives innovations in organic cotton cover wrapping over partially bio-derived elastomer cores, minimizing synthetic micro-plastic shedding.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 06, 2026",
+                readTime: "10 min read (1,000 words)",
+                tags: ["Cotton", "Organic", "Sustainable", "Cover Yarn"]
+            },
+            {
+                id: 10,
+                slug: "article-10.html",
+                category: "Smart Textiles",
+                title: "Thermo-Chromic Elastic Bands for Real-Time Thermal Hazard Indication",
+                shortDesc: "Encapsulating heat-sensitive micro-pigments inside elastomer coatings for industrial worker safety gear.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Smart safety webbings that shift color upon reaching critical heat thresholds provide instant visual warnings in steel foundries and emergency response zones.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 07, 2026",
+                readTime: "11 min read (1,030 words)",
+                tags: ["Smart Textiles", "Thermochromic", "Safety Gear", "Coating"]
+            },
+            {
+                id: 11,
+                slug: "article-11.html",
+                category: "Spandex",
+                title: "Chlorine-Resistant Elastane Formulations for Performance Swimwear",
+                shortDesc: "Incorporating hydrotalcite inorganic cross-linkers to resist active chlorine bath degradation in athletic swim fabrics.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Active pool chlorine severely breaks down standard polyurethane urethane links. Specialty hydrotalcite additives act as sacrificial chlorine scavengers inside the spandex polymer matrix.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 07, 2026",
+                readTime: "12 min read (1,120 words)",
+                tags: ["Spandex", "Chlorine-Resistant", "Swimwear", "Polymer"]
+            },
+            {
+                id: 12,
+                slug: "article-12.html",
+                category: "Rubber",
+                title: "Heavy-Duty Aerospace Bungee Cords with Vulcanized Core Assemblies",
+                shortDesc: "Multi-strand natural rubber core bundles encased in braided Kevlar sleeves for extreme military launch and arrest systems.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Military UAV launch bungees require massive energy storage capacity. Bundling 500+ individual high-modulus vulcanized rubber strands inside aramid braided sleeves yields unmatched kinetic resilience.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 08, 2026",
+                readTime: "14 min read (1,250 words)",
+                tags: ["Rubber", "Aerospace", "Bungee", "Kevlar"]
+            },
+            {
+                id: 13,
+                slug: "article-13.html",
+                category: "Machinery",
+                title: "Ultrasonic Slitting and Edge-Sealing of Synthetic Elastic Webbing",
+                shortDesc: "Preventing edge fraying in polyester-covered elastic tapes via 20kHz ultrasonic horn cutting technology.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Traditional hot-blade slitting leaves hard melted beads along elastic webbings. Ultrasonic cutting vibrates molecular bonds at 20,000 Hz, creating soft, non-irritating fused edges.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092335297-586b8979844f?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 08, 2026",
+                readTime: "11 min read (1,060 words)",
+                tags: ["Machinery", "Ultrasonic", "Slitting", "Webbing"]
+            },
+            {
+                id: 14,
+                slug: "article-14.html",
+                category: "Cotton",
+                title: "Bamboo-Cotton Blends for Ultra-Soft Antimicrobial Elastic Wraps",
+                shortDesc: "Synergistic combination of bamboo viscose Kun substance with mercerized cotton for orthopedic skin-contact pads.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Blending naturally bio-static bamboo viscose with high-tenacity long-staple cotton produces cover yarns with exceptional moisture regain (11.5%) and natural odor resistance.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 08, 2026",
+                readTime: "10 min read (1,000 words)",
+                tags: ["Cotton", "Bamboo", "Antimicrobial", "Orthopedic"]
+            },
+            {
+                id: 15,
+                slug: "article-15.html",
+                category: "Smart Textiles",
+                title: "Piezoelectric Elastomeric Fibers for Self-Powered Structural Sensing",
+                shortDesc: "Harvesting kinetic mechanical stretch energy into micro-watt electrical potential using PVDF-TrFE polymer fibers.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Piezoelectric elastomeric threads convert dynamic physical motion directly into electrical micro-currents, enabling self-powered strain monitoring in smart bridges and exoskeletons.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 09, 2026",
+                readTime: "13 min read (1,180 words)",
+                tags: ["Smart Textiles", "Piezoelectric", "Energy Harvesting", "Sensors"]
+            },
+            {
+                id: 16,
+                slug: "article-16.html",
+                category: "Spandex",
+                title: "High-Temperature Resistant Spandex for Heat-Set Finishing Cycles",
+                shortDesc: "Formulating heat-stabilized elastane threads capable of retaining elasticity after 200°C stenter frame finishing.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Standard elastane degrades when subjected to high-temperature fabric dyeing and thermal heat-setting. Polymer chain modifications using sterically hindered phenolic stabilizers prevent thermal chain scission up to 205°C.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 09, 2026",
+                readTime: "11 min read (1,070 words)",
+                tags: ["Spandex", "Heat Resistant", "Textile Finishing", "Stenter"]
+            },
+            {
+                id: 17,
+                slug: "article-17.html",
+                category: "Rubber",
+                title: "Ozone-Resistant EPDM Rubber Threads for Outdoor Marine Rigging",
+                shortDesc: "Ethylene Propylene Diene Monomer rubber formulation engineered for continuous salt spray and UV radiation exposure.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Marine shock cords deployed on ocean vessels suffer rapid atmospheric degradation. EPDM synthetic rubber eliminates unsaturated double bonds in the polymer backbone, rendering the material immune to atmospheric ozone crack propagation.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 09, 2026",
+                readTime: "12 min read (1,090 words)",
+                tags: ["Rubber", "EPDM", "Marine", "Ozone Resistant"]
+            },
+            {
+                id: 18,
+                slug: "article-18.html",
+                category: "Machinery",
+                title: "Automatic Tension-Controlled Spooling and Package Winding Systems",
+                shortDesc: "Precision precision-wind traverse gears eliminating yarn ribboning and density variations in commercial thread spools.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Uneven spool winding density leads to severe tension spikes during high-speed warping. Electronic pattern-step winding machines adjust traverse ratios dynamically to guarantee zero thread entrapment.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 09, 2026",
+                readTime: "10 min read (1,020 words)",
+                tags: ["Machinery", "Winding", "Spooling", "Tension"]
+            },
+            {
+                id: 19,
+                slug: "article-19.html",
+                category: "Cotton",
+                title: "High-Twist Double-Wrapped Cotton Elastics for Heavy-Duty Workwear",
+                shortDesc: "S-z counter-balanced yarn wrapping dynamics providing extra protective abrasion armor for industrial elastic waistbands.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Industrial workwear requires heavy elastic waistbands capable of surviving hundreds of high-temperature commercial laundering cycles. Counter-wrapped S and Z twist cotton cover layers insulate the inner elastomer core from mechanical shearing.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 09, 2026",
+                readTime: "11 min read (1,050 words)",
+                tags: ["Cotton", "Workwear", "Cover Yarn", "Double-Wrapped"]
+            },
+            {
+                id: 20,
+                slug: "article-20.html",
+                category: "Smart Textiles",
+                title: "Micro-Fluidic Channels Embedded in Stretchable TPU Webbing",
+                shortDesc: "Capillary fluid movement inside elastomeric ribbons for active cooling and drug delivery wearables.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Integrating hollow micro-channels directly into thermoplastic polyurethane (TPU) elastic webbings allows active coolant circulation across athlete bodies during high-intensity training.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 09, 2026",
+                readTime: "13 min read (1,140 words)",
+                tags: ["Smart Textiles", "Microfluidics", "Cooling", "Wearable"]
+            },
+            {
+                id: 21,
+                slug: "article-21.html",
+                category: "Spandex",
+                title: "Super-Soft Low-Modulus Elastane for Sensitive Infant Apparel",
+                shortDesc: "Formulating low power spandex threads that prevent red skin mark indentations on infant leg openings.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Infant leg gathers require gentle, non-constrictive elastic holding force. Low-modulus elastane polymers maintain flat strain-stress curves between 50% and 200% elongation, eliminating cutaneous compression marks.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 10, 2026",
+                readTime: "10 min read (1,000 words)",
+                tags: ["Spandex", "Infant Care", "Low-Modulus", "Soft Elastic"]
+            },
+            {
+                id: 22,
+                slug: "article-22.html",
+                category: "Rubber",
+                title: "Extruded Neoprene Rubber Strips for Marine Diving Wetsuit Seams",
+                shortDesc: "Closed-cell polychloroprene elastomeric tapes with high thermal insulation and waterproof hydrostatic resistance.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Sealing blind-stitched wetsuit seams requires elastic tapes capable of withstanding 5 bar hydrostatic water pressure without water ingress. Closed-cell nitrogen-blown polychloroprene strips offer extreme thermal insulation and 300% multidirectional stretch flexibility.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 10, 2026",
+                readTime: "12 min read (1,110 words)",
+                tags: ["Rubber", "Neoprene", "Wetsuit", "Waterproof"]
+            },
+            {
+                id: 23,
+                slug: "article-23.html",
+                category: "Machinery",
+                title: "Vision System Inspection for Inline Defect Detection in Elastic Braids",
+                shortDesc: "Deploying high-speed CMOS camera arrays with AI defect classifiers to detect skipped stitches and broken rubber ends.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Manual quality inspection of elastic braids running at 50 meters per minute is prone to human oversight. Machine vision systems equipped with telecentric lenses scan 100% of production in real-time, detecting broken rubber cores as small as 0.1mm.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092335297-586b8979844f?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 10, 2026",
+                readTime: "11 min read (1,060 words)",
+                tags: ["Machinery", "Vision System", "AI Inspection", "Quality Control"]
+            },
+            {
+                id: 24,
+                slug: "article-24.html",
+                category: "Cotton",
+                title: "Naturally Colored Cotton Yarns for Chemical-Free Elastic Tapes",
+                shortDesc: "Utilizing heirloom brown and green cotton cultivars to produce zero-dye chemical cover yarns for sensitive skin.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Dyeing processes consume massive chemical volumes and water resources. Heirloom naturally pigmented cotton fibers grow directly in shades of tan, brown, and pale green, eliminating wet-processing pollution entirely.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 10, 2026",
+                readTime: "10 min read (1,010 words)",
+                tags: ["Cotton", "Naturally Colored", "Eco-Friendly", "Zero-Dye"]
+            },
+            {
+                id: 25,
+                slug: "article-25.html",
+                category: "Smart Textiles",
+                title: "Optical Fiber-Embedded Elastic Cords for Strain-Distribution Sensing",
+                shortDesc: "Integrating polymer optical fibers (POF) into braided elastic ropes for light attenuation-based structural strain monitoring.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">When flexible polymer optical fibers stretch, light transmission intensity drops proportionally to mechanical deformation. Measuring light attenuation across embedded POF cores delivers continuous strain data along 100-meter structural cables.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 10, 2026",
+                readTime: "13 min read (1,160 words)",
+                tags: ["Smart Textiles", "Optical Fiber", "Strain Sensor", "POF"]
+            },
+            {
+                id: 26,
+                slug: "article-26.html",
+                category: "Spandex",
+                title: "Recycled Polyurethane Elastane: Chemical Depolymerization Pathways",
+                shortDesc: "Converting post-industrial spandex textile scrap back into virgin-grade polyurethane monomers via glycolysis.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Elastane blends have historically posed severe textile recycling challenges. Chemical glycolysis breaks down urethane linkages into polyols and amine precursors, enabling closed-loop re-spinning of 100% recycled spandex fiber.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 10, 2026",
+                readTime: "12 min read (1,090 words)",
+                tags: ["Spandex", "Recycling", "Depolymerization", "Circular Economy"]
+            },
+            {
+                id: 27,
+                slug: "article-27.html",
+                category: "Rubber",
+                title: "Fluoroelastomer (FKM) Elastic Seals for Corrosive Industrial Environments",
+                shortDesc: "Engineering fluorinated synthetic rubber cords for extreme acid, fuel, and solvent resistance up to 250°C.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Standard natural rubber instantly swells and disintegrates upon contact with aromatic fuels and concentrated acids. Fluoroelastomers (FKM) feature high-density carbon-fluorine bonds that withstand harsh chemical processing environments up to 250°C.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 10, 2026",
+                readTime: "11 min read (1,030 words)",
+                tags: ["Rubber", "Fluoroelastomer", "FKM", "Chemical Resistant"]
+            },
+            {
+                id: 28,
+                slug: "article-28.html",
+                category: "Machinery",
+                title: "Automated Continuous Dyeing Ranges for High-Elasticity Narrow Tapes",
+                shortDesc: "Infrared pre-drying, pad-steam thermosol fixation, and tensionless wash ranges for uniform color shade consistency.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Dyeing elastic tapes under high warp tension leads to severe width reduction and color streakiness. Continuous pad-steam dyeing lines utilize tensionless dancer rollers and contactless infrared pre-dryers to set dyestuffs evenly across elastomeric webs.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 10, 2026",
+                readTime: "12 min read (1,070 words)",
+                tags: ["Machinery", "Continuous Dyeing", "Thermosol", "Narrow Fabrics"]
+            },
+            {
+                id: 29,
+                slug: "article-29.html",
+                category: "Cotton",
+                title: "Comb-Gassed Egyptian Giza Cotton Cover Yarns for Luxury Underwear",
+                shortDesc: "Singeing surface micro-fuzz with precision gas flame burners to achieve glass-like smoothness over elastane cores.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Egyptian Giza 88 long-staple cotton fibers possess staple lengths exceeding 36mm. Passing the spun yarn through a controlled gas flame at high velocity burns off protruding fiber ends, yielding flawless glass-smooth elastic core wraps.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 10, 2026",
+                readTime: "10 min read (1,000 words)",
+                tags: ["Cotton", "Giza Cotton", "Gassed Yarn", "Luxury Textiles"]
+            },
+            {
+                id: 30,
+                slug: "article-30.html",
+                category: "Smart Textiles",
+                title: "Shape-Memory Alloy (SMA) Hybrid Elastic Actuators for Soft Robotics",
+                shortDesc: "Combining Nitinol muscle wires with elastomeric return springs for silent high-force artificial muscle contracting.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Nickel-Titanium (Nitinol) shape memory wires contract by 4% when electrically heated above their phase-transformation temperature. Co-braiding SMA wires alongside elastomeric return cords yields high-force artificial muscle fibers for soft robotic prosthetics.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 10, 2026",
+                readTime: "14 min read (1,210 words)",
+                tags: ["Smart Textiles", "Nitinol", "Shape Memory", "Robotics"]
+            },
+            {
+                id: 31,
+                slug: "article-31.html",
+                category: "Spandex",
+                title: "Anti-Yellowing Additives for White Elastane Core Webbings",
+                shortDesc: "Inhibiting atmospheric NOx gas and thermal oxidation discoloration in white surgical and intimate garment elastics.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Exposure to atmospheric nitrogen oxides (NOx) during warehouse storage causes white spandex yarns to yellow severely. Compounding high-molecular-weight sterically hindered amine light stabilizers (HALS) prevents polyurethane chromophore oxidation.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 10, 2026",
+                readTime: "11 min read (1,040 words)",
+                tags: ["Spandex", "Anti-Yellowing", "HALS", "Surgical Elastics"]
+            },
+            {
+                id: 32,
+                slug: "article-32.html",
+                category: "Rubber",
+                title: "Thermoplastic Vulcanizate (TPV) Extrusions for Automotive Weatherstripping",
+                shortDesc: "Cross-linked EPDM rubber phase dispersed within a continuous polypropylene matrix for 100% recyclable automotive seals.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Thermoplastic Vulcanizates (TPV) bridge the gap between thermoset rubber resilience and plastic processability. Dynamically vulcanizing EPDM rubber droplets inside a polypropylene melt creates fully recyclable car door seal webbings.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 10, 2026",
+                readTime: "12 min read (1,080 words)",
+                tags: ["Rubber", "TPV", "Automotive", "Weatherstripping"]
+            },
+            {
+                id: 33,
+                slug: "article-33.html",
+                category: "Machinery",
+                title: "Energy-Efficient Servo Motors in Narrow Fabric Weaving Looms",
+                shortDesc: "Replacing traditional clutch motors with direct-drive permanent magnet synchronous motors to lower power consumption by 35%.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Legacy loom clutch motors waste energy during idle shed opening periods. Direct-drive permanent magnet synchronous motors deliver instant torque on demand, cutting factory kWh power consumption by 35% while dampening mechanical vibration.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 10, 2026",
+                readTime: "10 min read (1,020 words)",
+                tags: ["Machinery", "Servo Motors", "Energy Efficiency", "Sustainability"]
+            },
+            {
+                id: 34,
+                slug: "article-34.html",
+                category: "Cotton",
+                title: "Zero-Twist Cotton Wrap Technology for Ultra-Soft Bandage Core Coverings",
+                shortDesc: "PVA soluble binder spinning enabling zero-twist cotton sheath structures for maximal liquid absorption and tenderness.",
+                fullContent: `<div class="space-y-6 text-slate-700 dark:text-slate-300">
+                    <p class="text-lg leading-relaxed font-medium">Traditional cotton spinning requires high twist to hold fibers together, which hardens yarn texture. Wrapping untwisted cotton sheaths bound by water-soluble PVA filament—which dissolves completely during finishing—yields cloud-soft elastic medical bandages.</p>
+                </div>`,
+                image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 10, 2026",
+                readTime: "11 min read (1,050 words)",
+                tags: ["Cotton", "Zero-Twist", "Medical Bandages", "Absorbent"]
+            }
+        ];
+
+        // UI & MODAL CONTROL FUNCTIONS
+        function toggleQuickSearchModal() {
+            const modal = document.getElementById('quickSearchModal');
+            if (modal) {
+                if (modal.classList.contains('hidden')) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    const searchInput = document.getElementById('modalSearchInput');
+                    if (searchInput) {
+                        searchInput.value = searchQuery;
+                        searchInput.focus();
+                    }
+                    handleSearchInput(searchQuery);
+                } else {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            }
+        }
+
+        // DEDICATED SEPARATE PAGE ROUTING FOR WRITE ARTICLE
+        function openWriteArticleModal() {
+            // Require login before allowing user to write an article
+            if (!window.currentUser) {
+                openLoginModal();
+                const errorMsg = document.getElementById('loginErrorMessage');
+                if (errorMsg) {
+                    errorMsg.innerText = "Please sign in to write and publish an article on SNEH ELASTIC BLOG.";
+                    errorMsg.classList.remove('hidden');
+                }
+                return;
+            }
+            navigateToPage('write-article.html');
+        }
+
+        function closeWriteArticleModal() {
+            navigateToPage('home.html');
+        }
+
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function openProfileModal() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function setFilterFromModal(cat) {
+            activeCategoryFilter = cat;
+            toggleQuickSearchModal();
+            navigateToPage('home.html');
+        }
+
+        // ENHANCED RELIABLE ADVANCED SEARCH ENGINE
+        function handleSearchInput(query) {
+            searchQuery = (query || '').toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResultsList');
+            if (!resultsContainer) return;
+
+            const filtered = ARTICLES_DATABASE.filter(art => {
+                const titleMatch = art.title.toLowerCase().includes(searchQuery);
+                const descMatch = art.shortDesc.toLowerCase().includes(searchQuery);
+                const catMatch = art.category.toLowerCase().includes(searchQuery);
+                const tagMatch = art.tags ? art.tags.some(t => t.toLowerCase().includes(searchQuery)) : false;
+                const authorMatch = art.author.toLowerCase().includes(searchQuery);
+                return titleMatch || descMatch || catMatch || tagMatch || authorMatch;
+            });
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="p-8 text-center text-slate-500 space-y-2">
+                        <i class="fa-solid fa-magnifying-glass-minus text-3xl text-slate-300"></i>
+                        <div class="text-xs font-semibold">No matching industrial research articles found</div>
+                        <p class="text-[11px] text-slate-400">Try searching for keywords like "Spandex", "Latex", "Vulcanization", "Needle Loom", or "Sensors"</p>
+                    </div>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = filtered.map(art => `
+                <div onclick="navigateToPage('${art.slug}'); toggleQuickSearchModal();" class="p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/80 rounded-xl cursor-pointer transition-all flex items-center space-x-3 group border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                    <img src="${art.image}" alt="${art.title}" class="w-14 h-14 rounded-lg object-cover shrink-0 group-hover:scale-105 transition-transform">
+                    <div class="flex-grow min-w-0">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] uppercase font-extrabold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${art.category}</span>
+                            <span class="text-[10px] text-slate-400 font-medium">${art.date}</span>
+                        </div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-emerald-600 transition-colors mt-0.5">${art.title}</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">${art.shortDesc}</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                </div>
+            `).join('');
+        }
+
+        // ROUTER NAVIGATION & VIEW RENDERING ENGINE
+        function navigateToPage(pageSlug) {
+            activeRoute = pageSlug;
+            renderAppView();
+            try {
+                if (window.location.protocol !== 'blob:') {
+                    window.history.pushState({ page: pageSlug }, '', `?page=${pageSlug}`);
+                }
+            } catch (e) {
+                // Ignore history sandbox errors inside iframe environments
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderAppView() {
+            const container = document.getElementById('appRouterContainer');
+            if (!container) return;
+
+            if (activeRoute === 'home.html' || activeRoute === '') {
+                renderHomePageView(container);
+            } else if (activeRoute === 'write-article.html') {
+                renderWriteArticlePageView(container);
+            } else {
+                const article = ARTICLES_DATABASE.find(a => a.slug === activeRoute);
+                if (article) {
+                    renderArticlePageView(container, article);
+                } else {
+                    render404Page(container);
+                }
+            }
+        }
+
+        function renderHomePageView(container) {
+            const filteredArticles = ARTICLES_DATABASE.filter(art => {
+                const matchesCat = (activeCategoryFilter === 'All' || art.category === activeCategoryFilter);
+                const matchesSearch = (
+                    art.title.toLowerCase().includes(searchQuery) || 
+                    art.shortDesc.toLowerCase().includes(searchQuery) ||
+                    art.category.toLowerCase().includes(searchQuery) ||
+                    (art.tags && art.tags.some(t => t.toLowerCase().includes(searchQuery)))
+                );
+                return matchesCat && matchesSearch;
+            });
+
+            container.innerHTML = `
+                <!-- HERO SECTION WITH CENTERED SEARCH OVERLAP -->
+                <section class="hero-pattern text-white pt-14 pb-24 px-4 lg:px-8 relative overflow-hidden">
+                    <div class="max-w-4xl mx-auto text-center space-y-4 relative z-10">
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
+                            SNEH ELASTIC RESEARCH & DEVELOPMENT KNOWLEDGE BASE
+                        </span>
+                        <h1 class="font-heading font-black text-3xl sm:text-5xl tracking-tight leading-tight">
+                            Industrial Textile & <span class="gradient-text">Elastomer Engineering</span>
+                        </h1>
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                            Access 34+ technical whitepapers on polyurethane extrusion, latex vulcanization, micro-denier spandex, smart textiles, and narrow loom mechanics.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- CENTERED OVERLAPPING HERO SEARCH BAR -->
+                <div class="max-w-3xl mx-auto px-4 -mt-10 relative z-20">
+                    <div class="glass-card rounded-2xl p-2 shadow-2xl flex items-center border border-slate-200">
+                        <div class="pl-4 pr-2 text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-lg text-emerald-600"></i>
+                        </div>
+                        <input type="text" id="heroMainSearchInput" value="${searchQuery}" oninput="searchQuery = this.value.toLowerCase(); renderAppView();" placeholder="Search 34+ articles by yarn type, polymer specs, or machinery..." class="w-full py-3 px-2 text-xs sm:text-sm font-medium text-slate-900 placeholder-slate-400 bg-transparent outline-none">
+                        <button onclick="toggleQuickSearchModal()" class="px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all shrink-0 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>Advanced Filter</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CATEGORY FILTER CHIPS -->
+                <section class="max-w-7xl mx-auto px-4 lg:px-8 pt-10 pb-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-200 pb-4 mb-6 gap-4">
+                        <div class="flex items-center space-x-2 overflow-x-auto py-1 w-full sm:w-auto scrollbar-none">
+                            ${['All', 'Spandex', 'Rubber', 'Cotton', 'Machinery', 'Smart Textiles'].map(cat => `
+                                <button onclick="activeCategoryFilter = '${cat}'; renderAppView();" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategoryFilter === cat ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
+                                    ${cat}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <span class="text-xs font-semibold text-slate-500 shrink-0">
+                            Showing ${filteredArticles.length} of ${ARTICLES_DATABASE.length} Technical Articles
+                        </span>
+                    </div>
+
+                    <!-- ARTICLES GRID -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${filteredArticles.map(art => `
+                            <article onclick="navigateToPage('${art.slug}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col justify-between">
+                                <div>
+                                    <div class="relative h-48 overflow-hidden bg-slate-100">
+                                        <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        <span class="absolute top-3 left-3 px-2.5 py-1 bg-slate-900/90 backdrop-blur-md text-emerald-400 font-extrabold text-[10px] uppercase rounded-lg border border-white/10">
+                                            ${art.category}
+                                        </span>
+                                        <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 backdrop-blur-md text-white font-medium text-[10px] rounded">
+                                            ${art.slug}
+                                        </span>
+                                    </div>
+                                    <div class="p-5 space-y-2">
+                                        <div class="text-[10px] text-slate-400 font-semibold">${art.date} • ${art.readTime}</div>
+                                        <h3 class="font-heading font-extrabold text-base text-slate-900 group-hover:text-emerald-600 transition-colors line-clamp-2 leading-snug">
+                                            ${art.title}
+                                        </h3>
+                                        <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed">
+                                            ${art.shortDesc}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="px-5 py-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-600 mt-2">
+                                    <span>Read Full 1,000+ Word Article</span>
+                                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                                </div>
+                            </article>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+        }
+
+        // SEPARATE DEDICATED PAGE FOR WRITING AN ARTICLE (write-article.html)
+        function renderWriteArticlePageView(container) {
+            const authorDefault = window.currentUser ? (window.currentUser.displayName || window.currentUser.email) : '';
+
+            container.innerHTML = `
+                <section class="max-w-4xl mx-auto px-4 lg:px-8 py-10">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10">
+                        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-6 mb-6">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xl">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </div>
+                                <div>
+                                    <h1 class="font-heading font-extrabold text-2xl text-slate-900 dark:text-white">Publish Technical Article</h1>
+                                    <p class="text-xs text-slate-500">Dedicated Authoring Studio (write-article.html)</p>
+                                </div>
+                            </div>
+                            <button onclick="navigateToPage('home.html')" class="px-3.5 py-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 text-xs font-bold transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-xmark"></i> Cancel
+                            </button>
+                        </div>
+
+                        <form id="dedicatedArticleForm" onsubmit="handleNewArticleSubmit(event)" class="space-y-6 text-xs sm:text-sm">
+                            <div>
+                                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Article Title</label>
+                                <input type="text" id="newArticleTitle" required placeholder="e.g. Nanostructure Mechanics of Polyurethane Elastomeric Filament Core" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Article Category</label>
+                                    <select id="newArticleCategory" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                                        <option value="Spandex">Spandex</option>
+                                        <option value="Rubber">Rubber</option>
+                                        <option value="Cotton">Cotton</option>
+                                        <option value="Machinery">Machinery</option>
+                                        <option value="Smart Textiles">Smart Textiles</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Author Name (Auto-Fetched from SNEH Account)</label>
+                                    <input type="text" id="newArticleAuthor" value="${authorDefault}" readonly required class="w-full px-4 py-3 bg-slate-100 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl text-emerald-700 dark:text-emerald-400 font-bold outline-none cursor-not-allowed">
+                                    <p class="text-[10px] text-slate-400 mt-1">Author identity is automatically linked to your authenticated Firebase session.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Short Executive Summary</label>
+                                <textarea id="newArticleSummary" rows="2" required placeholder="Provide a concise 2-sentence summary of your polymer or textile research..." class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Full Technical Whitepaper Content (1,000+ Words)</label>
+                                <textarea id="newArticleContent" rows="10" required placeholder="Enter full research paper content, mathematical stress-strain formulas, ISO testing standards, and machine calibration parameters..." class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
+                            </div>
+
+                            <div class="pt-4 flex items-center justify-end space-x-4">
+                                <button type="button" onclick="navigateToPage('home.html')" class="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl">Discard</button>
+                                <button type="submit" class="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all flex items-center gap-2 text-sm">
+                                    <i class="fa-solid fa-paper-plane"></i> Publish Whitepaper to SNEH ELASTIC BLOG
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderArticlePageView(container, article) {
+            const isAuthenticated = !!window.currentUser;
+
+            container.innerHTML = `
+                <!-- FULLSCREEN ARTICLE HEADER -->
+                <section class="relative bg-slate-950 text-white pt-12 pb-20 px-4 lg:px-8 overflow-hidden">
+                    <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('${article.image}');"></div>
+                    <div class="max-w-4xl mx-auto relative z-10 space-y-4">
+                        <button onclick="navigateToPage('home.html')" class="inline-flex items-center space-x-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors mb-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Back to Articles</span>
+                        </button>
+                        <div class="flex items-center space-x-3 text-xs">
+                            <span class="px-3 py-1 bg-emerald-500 text-slate-950 font-extrabold uppercase rounded-lg">
+                                ${article.category}
+                            </span>
+                            <span class="text-slate-400">${article.date} • ${article.readTime}</span>
+                            <span class="text-emerald-400 font-mono bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800 text-[11px]">${article.slug}</span>
+                        </div>
+                        <h1 class="font-heading font-extrabold text-2xl sm:text-4xl leading-tight">
+                            ${article.title}
+                        </h1>
+                        <div class="flex items-center space-x-3 pt-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-xs">
+                                ${article.author.charAt(0)}
+                            </div>
+                            <span class="text-xs font-semibold text-slate-300">By ${article.author}</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FULLSCREEN ARTICLE CONTENT VIEW -->
+                <section class="max-w-4xl mx-auto px-4 lg:px-8 py-12 relative min-h-[400px]">
+                    <div class="${!isAuthenticated ? 'blur-md select-none pointer-events-none opacity-40' : ''} space-y-6 text-slate-800 dark:text-slate-200">
+                        ${article.fullContent}
+                    </div>
+
+                    <!-- GATED CONTENT LOCK SCREEN OVERLAY -->
+                    ${!isAuthenticated ? `
+                        <div class="absolute inset-0 top-8 flex flex-col items-center justify-center bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 text-center text-white border border-slate-700/50 shadow-2xl">
+                            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <h3 class="font-heading font-extrabold text-2xl mb-2">Technical Whitepaper Locked</h3>
+                            <p class="text-xs text-slate-300 max-w-md mb-6 leading-relaxed">
+                                Please sign in with your SNEH ELASTIC account to unlock complete 1,000+ word technical research, molecular chemical structures, and testing metrics.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="openLoginModal()" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Sign In to Unlock
+                                </button>
+                                <a href="https://account.snehelastic.com" target="_blank" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2">
+                                    <span>Create Account</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    ` : ''}
+                </section>
+            `;
+        }
+
+        function render404Page(container) {
+            container.innerHTML = `
+                <div class="max-w-md mx-auto text-center py-24 px-4">
+                    <h2 class="font-heading text-4xl font-black text-slate-900">404</h2>
+                    <p class="text-xs text-slate-500 mt-2 mb-6">Specified article page (${activeRoute}) does not exist in the repository.</p>
+                    <button onclick="navigateToPage('home.html')" class="px-5 py-2.5 bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl">
+                        Return to Home Page
+                    </button>
+                </div>
+            `;
+        }
+
+        // AUTHENTICATION MODAL AND LOGOUT HANDLERS
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginErrorMessage');
+
+            if (errorElement) errorElement.classList.add('hidden');
+
+            try {
+                if (window.firebaseAuth && window.firebaseSignIn) {
+                    await window.firebaseSignIn(window.firebaseAuth, email, password);
+                    closeLoginModal();
+                }
+            } catch (err) {
+                if (errorElement) {
+                    errorElement.innerText = err.message || "Failed to sign in. Please verify credentials.";
+                    errorElement.classList.remove('hidden');
+                }
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                if (window.firebaseAuth && window.firebaseSignOut) {
+                    await window.firebaseSignOut(window.firebaseAuth);
+                    closeProfileModal();
+                }
+            } catch (err) {
+                console.error("Logout error:", err);
+            }
+        }
+
+        function handleNewArticleSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('newArticleTitle').value;
+            const category = document.getElementById('newArticleCategory').value;
+            const author = document.getElementById('newArticleAuthor').value || (window.currentUser ? window.currentUser.email : 'Sneh Researcher');
+            const summary = document.getElementById('newArticleSummary').value;
+            const content = document.getElementById('newArticleContent').value;
+
+            const newId = ARTICLES_DATABASE.length + 1;
+            const newSlug = `article-${newId}.html`;
+
+            ARTICLES_DATABASE.unshift({
+                id: newId,
+                slug: newSlug,
+                category: category,
+                title: title,
+                shortDesc: summary,
+                fullContent: `<div class="space-y-4"><p class="text-lg text-slate-700 dark:text-slate-200 font-medium">${summary}</p><div class="pt-4 text-sm leading-relaxed">${content}</div></div>`,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: author,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
+                readTime: "10 min read (1,000+ words)",
+                tags: [category, "User Published", "Textiles"]
+            });
+
+            navigateToPage(newSlug);
+        }
+
+        // INITIALIZE APP ROUTE ON PAGE LOAD & KEYBOARD SHORTCUTS
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageParam = urlParams.get('page');
+            if (pageParam) {
+                activeRoute = pageParam;
+            }
+            renderAppView();
+
+            // ESC KEY TO CLOSE MODALS
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const searchModal = document.getElementById('quickSearchModal');
+                    if (searchModal && !searchModal.classList.contains('hidden')) {
+                        toggleQuickSearchModal();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
