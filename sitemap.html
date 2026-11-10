@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap - SNEH ELASTIC BLOG</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 600: '#0284c7', 700: '#0369a1', dark: '#07162c' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+            <a href="home.html" class="flex items-center space-x-3 group">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-10 w-auto object-contain">
+                <span class="font-heading font-black text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
+                    <span>SNEH ELASTIC</span>
+                    <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 text-xs uppercase font-extrabold">BLOG</span>
+                </span>
+            </a>
+            <a href="home.html" class="px-4 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-brand-700 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-house"></i> Return Home
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 lg:px-8 py-12 w-full">
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold uppercase tracking-wider">Site Directory</span>
+            <h1 class="font-heading font-black text-3xl sm:text-4xl text-slate-900">Website Sitemap</h1>
+            <p class="text-xs sm:text-sm text-slate-600">Complete structural index of all 34 technical elastomer whitepapers, authoring studios, system documents, and account portals.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Core Pages -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center space-x-3 text-emerald-600">
+                    <i class="fa-solid fa-compass text-lg"></i>
+                    <h3 class="font-heading font-bold text-base text-slate-900">Core Platform Pages</h3>
+                </div>
+                <ul class="space-y-2.5 text-xs font-semibold text-slate-700">
+                    <li><a href="home.html" class="hover:text-emerald-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-emerald-50 transition-colors"><span>Home Feed (`home.html`)</span><i class="fa-solid fa-arrow-right text-[10px] text-slate-400"></i></a></li>
+                    <li><a href="write-article.html" class="hover:text-emerald-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-emerald-50 transition-colors"><span>Write an Article Studio (`write-article.html`)</span><i class="fa-solid fa-arrow-right text-[10px] text-slate-400"></i></a></li>
+                    <li><a href="js.html" class="hover:text-emerald-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-emerald-50 transition-colors"><span>System Architecture (`js.html`)</span><i class="fa-solid fa-arrow-right text-[10px] text-slate-400"></i></a></li>
+                    <li><a href="https://account.snehelastic.com" target="_blank" class="hover:text-emerald-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-emerald-50 transition-colors"><span>Sneh Elastic Account Portal</span><i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i></a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center space-x-3 text-brand-600">
+                    <i class="fa-solid fa-tags text-lg"></i>
+                    <h3 class="font-heading font-bold text-base text-slate-900">Textile Categories</h3>
+                </div>
+                <ul class="space-y-2.5 text-xs font-semibold text-slate-700">
+                    <li><a href="home.html?cat=Spandex" class="hover:text-brand-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-sky-50 transition-colors"><span>Spandex & Polyurethane Core</span><span class="text-[10px] text-slate-400">7 Articles</span></a></li>
+                    <li><a href="home.html?cat=Rubber" class="hover:text-brand-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-sky-50 transition-colors"><span>Vulcanized Rubber Threads</span><span class="text-[10px] text-slate-400">7 Articles</span></a></li>
+                    <li><a href="home.html?cat=Cotton" class="hover:text-brand-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-sky-50 transition-colors"><span>Mercerized & Organic Cotton</span><span class="text-[10px] text-slate-400">7 Articles</span></a></li>
+                    <li><a href="home.html?cat=Machinery" class="hover:text-brand-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-sky-50 transition-colors"><span>Narrow Loom Machinery</span><span class="text-[10px] text-slate-400">7 Articles</span></a></li>
+                    <li><a href="home.html?cat=Smart%20Textiles" class="hover:text-brand-600 flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-sky-50 transition-colors"><span>Smart & Conductive Textiles</span><span class="text-[10px] text-slate-400">6 Articles</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-md space-y-4 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 text-emerald-400 mb-3">
+                        <i class="fa-solid fa-chart-pie text-lg"></i>
+                        <h3 class="font-heading font-bold text-base text-white">Repository Stats</h3>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">Sneh Elastic Threads Private Limited operates an advanced R&D documentation hub hosting peer-reviewed whitepapers on industrial elastomeric manufacturing.</p>
+                </div>
+                <div class="space-y-2 pt-4 border-t border-slate-800 text-xs">
+                    <div class="flex justify-between"><span class="text-slate-400">Total Articles:</span><span class="font-bold text-emerald-400">34 Whitepapers</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Word Count / Article:</span><span class="font-bold">1,000+ Words</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Authentication:</span><span class="font-bold text-emerald-400">Firebase SSO</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 34 Article Links Index -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <h2 class="font-heading font-extrabold text-lg text-slate-900 border-b border-slate-100 pb-4">Complete 34 Article Whitepaper Index</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs" id="sitemapArticleList">
+                <!-- Populated dynamically or via static list -->
+                <a href="home.html?page=article-1.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-1.html: Spandex Core Extrusion</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-2.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-2.html: Vulcanized Rubber Threads</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-3.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-3.html: Mercerized Cotton Covers</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-4.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-4.html: Needle Loom Calibration</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-5.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-5.html: Conductive Smart Threads</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-6.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-6.html: Micro-Denier Spandex</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-7.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-7.html: Latex-Free Polyisoprene</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-8.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-8.html: Jacquard Warp Feeders</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-9.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-9.html: Organic Cotton Wraps</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-10.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-10.html: Thermochromic Elastics</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-11.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-11.html: Chlorine-Resistant Spandex</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-12.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-12.html: Aerospace Bungees</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-13.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-13.html: Ultrasonic Webbing Slitting</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-14.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-14.html: Bamboo-Cotton Wraps</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-15.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-15.html: Piezoelectric Fibers</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-16.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-16.html: Heat-Resistant Spandex</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-17.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-17.html: EPDM Marine Cords</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-18.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-18.html: Tension Spool Winding</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-19.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-19.html: Workwear Cotton Elastics</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-20.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-20.html: Microfluidic TPU Webbing</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-21.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-21.html: Infant Low-Modulus Elastics</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-22.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-22.html: Neoprene Wetsuit Seams</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-23.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-23.html: AI Vision Inspection</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-24.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-24.html: Naturally Pigmented Cotton</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-25.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-25.html: Optical Fiber Cords</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-26.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-26.html: Recycled Spandex Glycolysis</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-27.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-27.html: FKM Fluoroelastomers</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-28.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-28.html: Continuous Dyeing Ranges</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-29.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-29.html: Gassed Egyptian Cotton</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-30.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-30.html: Nitinol SMA Actuators</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-31.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-31.html: Anti-Yellowing HALS</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-32.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-32.html: TPV Weatherstrips</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-33.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-33.html: Servo Loom Motors</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="home.html?page=article-34.html" class="p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 flex items-center justify-between group transition-all">
+                    <span class="font-semibold text-slate-800 group-hover:text-emerald-600 truncate">article-34.html: Zero-Twist PVA Cotton</span>
+                    <i class="fa-solid fa-arrow-right text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-16 text-center">
+        <div class="container mx-auto px-4 space-y-2">
+            <p class="font-bold text-white">Sneh Elastic Threads Private Limited • Industrial R&D Sitemap</p>
+            <p>Block C, C-206, DSIIDC Industrial Area, Sector 1, Bawana, Delhi, 110039</p>
+        </div>
+    </footer>
+</body>
+</html>
