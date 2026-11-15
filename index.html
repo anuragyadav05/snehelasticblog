@@ -295,7 +295,9 @@
             getAuth, 
             signInWithEmailAndPassword, 
             onAuthStateChanged, 
-            signOut
+            signOut,
+            setPersistence,
+            browserLocalPersistence
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import {
             getFirestore,
@@ -323,6 +325,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // PERSISTENT LOGIN ACROSS PAGE RELOADS
+        setPersistence(auth, browserLocalPersistence).catch((err) => {
+            console.warn("Auth persistence note:", err);
+        });
 
         window.firebaseAuth = auth;
         window.firebaseDb = db;
@@ -1031,15 +1038,24 @@
                 return;
             }
             try {
-                const { doc, updateDoc, setDoc } = window.firestoreTools;
+                const { doc, setDoc } = window.firestoreTools;
                 const artRef = doc(window.firebaseDb, 'artifacts', window.blogAppId, 'public', 'data', 'community_articles', firestoreId);
-                await setDoc(artRef, { status: 'approved', approvedBy: window.currentUser.email, approvedAtMs: Date.now() }, { merge: true });
                 
-                // Update local cache immediately for instant feedback
+                // Update Firestore and ensure merge is true
+                await setDoc(artRef, { 
+                    status: 'approved', 
+                    approvedBy: window.currentUser.email, 
+                    approvedAtMs: Date.now() 
+                }, { merge: true });
+                
+                // Update local cache immediately
                 const target = window.communityArticles.find(a => a.firestoreId === firestoreId);
-                if (target) target.status = 'approved';
+                if (target) {
+                    target.status = 'approved';
+                }
+                
                 renderAppView();
-                showToast("Article Approved! It is now LIVE on the website.");
+                showToast("Article Approved! It is now permanently LIVE on the website.");
             } catch (e) {
                 console.error("Approval error:", e);
                 showToast("Error approving article: " + e.message, true);
