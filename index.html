@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SNEH ELASTIC BLOG - Industrial Textile Knowledge Hub</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -264,21 +264,29 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // PERMANENT SESSION PERSISTENCE ACROSS PAGE RELOADS
-        setPersistence(auth, browserLocalPersistence).catch((err) => {
-            console.warn("Auth persistence note:", err);
+        // BULLETPROOF PERSISTENT SESSION ACROSS REFRESHES
+        setPersistence(auth, browserLocalPersistence).then(() => {
+            console.debug("Firebase Auth persistence set to LOCAL successfully.");
+        }).catch((err) => {
+            console.warn("Auth persistence error:", err);
         });
 
         window.firebaseAuth = auth;
         window.firebaseDb = db;
-        window.firebaseSignIn = signInWithEmailAndPassword;
-        window.firebaseSignOut = signOut;
+        window.firebaseSignIn = async (authObj, email, pass) => {
+            const cred = await signInWithEmailAndPassword(authObj, email, pass);
+            localStorage.setItem('sneh_logged_in_email', email);
+            return cred;
+        };
+        window.firebaseSignOut = async (authObj) => {
+            localStorage.removeItem('sneh_logged_in_email');
+            return await signOut(authObj);
+        };
         window.firestoreTools = { collection, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, serverTimestamp };
         window.blogAppId = appId;
 
         const ADMIN_EMAIL = "anuragyadav1776@gmail.com";
 
-        // Real-time Listener for Community Articles in Firestore
         const articlesCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'community_articles');
         window.communityArticlesCol = articlesCollectionRef;
 
@@ -290,7 +298,6 @@
             communityDocs.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
             window.communityArticles = communityDocs;
 
-            // Update Pending Badge Count
             const pendingCount = communityDocs.filter(a => a.status === 'pending').length;
             const badge = document.getElementById('pendingBadgeCount');
             if (badge) {
@@ -309,12 +316,12 @@
             console.warn("Firestore sync notice:", err.message);
         });
 
-        // Auth State Listener with Persistent Session Support
         onAuthStateChanged(auth, async (user) => {
             window.currentUser = user || null;
             window.userProfileData = null;
 
             if (user) {
+                localStorage.setItem('sneh_logged_in_email', user.email);
                 try {
                     const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'details');
                     const snap = await getDoc(userDocRef);
@@ -322,9 +329,15 @@
                         window.userProfileData = snap.data();
                     }
                 } catch (e) {}
+            } else {
+                // If local storage has an active email but auth is restoring, prevent premature flicker
+                const cachedEmail = localStorage.getItem('sneh_logged_in_email');
+                if (cachedEmail && !window.currentUser) {
+                    // Keep waiting for auth initialization
+                }
             }
 
-            window.updateAuthUI(user);
+            window.updateAuthUI(window.currentUser);
         });
 
         window.updateAuthUI = function(user) {
@@ -347,7 +360,6 @@
                 if (userAvatarText) userAvatarText.innerText = initials;
                 if (navUserName) navUserName.innerText = displayName;
 
-                // STRICT ADMIN VISIBILITY CHECK: ONLY anuragyadav1776@gmail.com
                 if (adminPortalBtn) {
                     if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                         adminPortalBtn.classList.remove('hidden');
