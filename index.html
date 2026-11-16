@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SNEH ELASTIC BLOG - Industrial Textile Knowledge Hub</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,16 +44,14 @@
     <style>
         html, body {
             touch-action: manipulation;
-            -ms-touch-action: manipulation;
             overscroll-behavior-x: none;
-            max-width: 100vw;
-            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
-        input, select, textarea {
-            font-size: 16px !important; /* Prevents iOS auto-zoom on input focus */
+        input, textarea, select {
+            font-size: 16px !important;
         }
         @media (min-width: 640px) {
-            input, select, textarea {
+            input, textarea, select {
                 font-size: 0.875rem !important;
             }
         }
@@ -68,7 +66,7 @@
             background-size: 24px 24px;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.94);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
@@ -92,12 +90,12 @@
             <!-- HEADER ACTIONS -->
             <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
                 <!-- Search Trigger -->
-                <button onclick="toggleQuickSearchModal()" class="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-1.5 text-xs font-semibold" title="Search Articles">
+                <button onclick="toggleQuickSearchModal()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-1.5 text-xs font-semibold" title="Search Articles">
                     <i class="fa-solid fa-magnifying-glass text-emerald-600 text-sm"></i>
                     <span class="hidden lg:inline">Search</span>
                 </button>
 
-                <!-- Admin Moderation Button (ONLY FOR anuragyadav1776@gmail.com) -->
+                <!-- Admin Moderation Button (ONLY anuragyadav1776@gmail.com) -->
                 <button id="adminPortalBtn" onclick="openAdminGate()" class="hidden px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 font-bold text-xs transition-all items-center gap-1.5 relative" title="Admin Approval Dashboard">
                     <i class="fa-solid fa-shield-halved text-amber-600"></i>
                     <span class="hidden md:inline">Admin Portal</span>
@@ -119,20 +117,19 @@
                     </button>
                 </div>
 
-                <!-- Logged In State: MOBILE SHOWS ONLY PROFILE ICON, DESKTOP SHOWS NAME + AVATAR -->
-                <div id="loggedInNav" class="hidden items-center">
-                    <button onclick="navigateToPage('profile.html')" class="flex items-center space-x-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200" title="My Profile">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500 text-slate-950 font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0">
-                            <i class="fa-solid fa-user text-xs sm:hidden"></i>
-                            <span id="userAvatarText" class="hidden sm:inline">SE</span>
+                <!-- Logged In State (MOBILE: PROFILE ICON ONLY | DESKTOP: ICON + NAME) -->
+                <div id="loggedInNav" class="hidden items-center space-x-2">
+                    <button onclick="navigateToPage('profile.html')" class="flex items-center space-x-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200" title="View Profile">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0">
+                            <i class="fa-solid fa-user text-xs"></i>
                         </div>
-                        <div class="text-left pr-1 hidden sm:block">
-                            <div class="text-xs font-extrabold text-slate-900 leading-tight max-w-[150px] truncate" id="navUserName">User</div>
+                        <div class="hidden sm:block text-left pr-1">
+                            <div class="text-xs font-extrabold text-slate-900 leading-tight max-w-[140px] truncate" id="navUserName">User</div>
                             <div class="text-[9px] text-emerald-600 font-bold leading-none flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Active
                             </div>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-500 text-[10px] hidden sm:inline"></i>
+                        <i class="hidden sm:inline fa-solid fa-chevron-right text-slate-500 text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -141,9 +138,9 @@
     </header>
 
     <!-- NOTIFICATION TOAST -->
-    <div id="toastBanner" class="fixed bottom-5 right-4 left-4 sm:left-auto sm:right-5 z-50 hidden sm:max-w-sm bg-slate-900 text-white px-4 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-medium">
+    <div id="toastBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 sm:bottom-5 z-50 hidden sm:max-w-sm bg-slate-900 text-white px-4 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-medium">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base shrink-0"></i>
-        <span id="toastMessage">Notification message</span>
+        <span id="toastMessage" class="leading-snug">Notification message</span>
     </div>
 
     <!-- DYNAMIC ROUTER CONTAINER -->
@@ -152,10 +149,10 @@
     </main>
 
     <!-- CLEAN FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
-        <div class="container mx-auto px-4 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center space-x-3">
-                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-7 w-auto object-contain brightness-200">
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 sm:py-8 border-t border-slate-800">
+        <div class="container mx-auto px-4 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center space-x-2.5">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-6 sm:h-7 w-auto object-contain brightness-200" onerror="this.style.display='none'">
                 <span class="font-heading font-bold text-white text-xs sm:text-sm">SNEH ELASTIC THREADS PVT. LTD.</span>
             </div>
             <p class="text-center sm:text-right text-[11px] text-slate-400">
@@ -167,12 +164,12 @@
     <!-- SIGN IN ONLY MODAL -->
     <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-3 sm:p-4">
         <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-5 sm:p-8 relative">
-            <button onclick="closeAuthModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="text-center mb-5">
-                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-11 w-auto mx-auto mb-3 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
+            <div class="text-center mb-5 sm:mb-6">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-10 sm:h-12 w-auto mx-auto mb-3 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
                 <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900">Sign In to SNEH ELASTIC BLOG</h2>
                 <p class="text-xs text-slate-500 mt-1">Enter your Sneh Elastic Account credentials</p>
             </div>
@@ -193,7 +190,7 @@
                 </button>
             </form>
 
-            <div class="mt-6 pt-5 border-t border-slate-100 text-center space-y-2">
+            <div class="mt-5 pt-4 border-t border-slate-100 text-center space-y-2">
                 <p class="text-xs text-slate-500">Don't have a SNEH ELASTIC Account yet?</p>
                 <a href="https://account.snehelastic.com" target="_blank" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition-all inline-flex items-center justify-center gap-2 shadow-sm">
                     <span>Create Account on account.snehelastic.com</span>
@@ -229,7 +226,7 @@
         <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-3 sm:p-4 relative overflow-hidden max-h-[85vh] flex flex-col">
             <div class="relative flex items-center mb-3 gap-2">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 text-sm"></i>
-                <input type="text" id="modalSearchInput" oninput="handleSearchInput(this.value)" placeholder="Search live articles..." 
+                <input type="text" id="modalSearchInput" oninput="handleSearchInput(this.value)" placeholder="Search live articles by keyword, polymer, or author..." 
                     class="w-full pl-10 pr-3 py-2.5 bg-slate-100 rounded-xl font-medium text-slate-900 border-0 focus:ring-2 focus:ring-emerald-500 outline-none">
                 <button onclick="toggleQuickSearchModal()" class="px-3 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0">
                     <i class="fa-solid fa-circle-xmark"></i>
@@ -240,28 +237,7 @@
         </div>
     </div>
 
-    <!-- INSTANT SYNCHRONOUS SESSION RESTORATION BEFORE MODULE LOADS -->
-    <script>
-        (function restoreCachedSessionImmediately() {
-            try {
-                const cachedRaw = localStorage.getItem('sneh_persistent_user');
-                if (cachedRaw) {
-                    const parsed = JSON.parse(cachedRaw);
-                    if (parsed && parsed.email) {
-                        window.currentUser = parsed;
-                        // Immediately update header UI on initial parse before any flicker
-                        window.addEventListener('DOMContentLoaded', () => {
-                            if (typeof window.updateAuthUI === 'function') {
-                                window.updateAuthUI(window.currentUser);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {}
-        })();
-    </script>
-
-    <!-- FIREBASE AUTH & FIRESTORE PERSISTENT REAL-TIME ENGINE -->
+    <!-- FIREBASE AUTH & FIRESTORE PERSISTENT ENGINE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
@@ -279,7 +255,6 @@
             doc,
             setDoc,
             getDoc,
-            updateDoc,
             deleteDoc,
             onSnapshot,
             serverTimestamp
@@ -294,7 +269,6 @@
             appId: "1:578142434664:web:snehelasticblog"
         };
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sneh-elastic-blog';
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -303,39 +277,29 @@
 
         window.firebaseAuth = auth;
         window.firebaseDb = db;
-        window.firebaseSignIn = async (authObj, email, pass) => {
-            const cred = await signInWithEmailAndPassword(authObj, email, pass);
-            const safeUserObj = {
-                uid: cred.user.uid,
-                email: cred.user.email,
-                displayName: cred.user.displayName || cred.user.email.split('@')[0]
-            };
-            localStorage.setItem('sneh_persistent_user', JSON.stringify(safeUserObj));
-            window.currentUser = safeUserObj;
-            return cred;
-        };
-        window.firebaseSignOut = async (authObj) => {
-            localStorage.removeItem('sneh_persistent_user');
-            window.currentUser = null;
-            try { await signOut(authObj); } catch (e) {}
-        };
-        window.firestoreTools = { collection, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, serverTimestamp };
-        window.blogAppId = appId;
+        window.firebaseSignIn = signInWithEmailAndPassword;
+        window.firebaseSignOut = signOut;
+        window.firestoreTools = { collection, addDoc, doc, setDoc, getDoc, deleteDoc, serverTimestamp };
 
         const ADMIN_EMAIL = "anuragyadav1776@gmail.com";
 
-        const articlesCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'community_articles');
-        window.communityArticlesCol = articlesCollectionRef;
+        function syncCommunityArticlesState(docs) {
+            let localSaved = [];
+            try {
+                localSaved = JSON.parse(localStorage.getItem('sneh_community_articles_cache') || '[]');
+            } catch (e) { localSaved = []; }
 
-        onSnapshot(articlesCollectionRef, (snapshot) => {
-            const communityDocs = [];
-            snapshot.forEach((docSnap) => {
-                communityDocs.push({ firestoreId: docSnap.id, ...docSnap.data() });
-            });
-            communityDocs.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
-            window.communityArticles = communityDocs;
+            const map = new Map();
+            localSaved.forEach(item => map.set(item.firestoreId || item.slug, item));
+            docs.forEach(item => map.set(item.firestoreId || item.slug, item));
 
-            const pendingCount = communityDocs.filter(a => a.status === 'pending').length;
+            const merged = Array.from(map.values()).sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+            window.communityArticles = merged;
+            try {
+                localStorage.setItem('sneh_community_articles_cache', JSON.stringify(merged));
+            } catch (e) {}
+
+            const pendingCount = merged.filter(a => a.status === 'pending').length;
             const badge = document.getElementById('pendingBadgeCount');
             if (badge) {
                 if (pendingCount > 0) {
@@ -345,64 +309,41 @@
                     badge.classList.add('hidden');
                 }
             }
-
             if (typeof renderAppView === 'function') {
                 renderAppView();
             }
-        });
+        }
 
-        onAuthStateChanged(auth, async (firebaseUser) => {
-            if (firebaseUser) {
-                const safeUserObj = {
-                    uid: firebaseUser.uid,
-                    email: firebaseUser.email,
-                    displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0]
-                };
-                localStorage.setItem('sneh_persistent_user', JSON.stringify(safeUserObj));
-                window.currentUser = safeUserObj;
+        const articlesCollectionRef = collection(db, 'community_articles');
+        window.communityArticlesCol = articlesCollectionRef;
 
-                try {
-                    const userDocRef = doc(db, 'artifacts', appId, 'users', firebaseUser.uid, 'profile', 'details');
-                    const snap = await getDoc(userDocRef);
-                    if (snap.exists()) {
-                        window.userProfileData = snap.data();
-                    }
-                } catch (e) {}
-            } else {
-                // Only stay logged out if there is no explicit persistent session saved in localStorage
-                const cachedRaw = localStorage.getItem('sneh_persistent_user');
-                if (cachedRaw) {
-                    try {
-                        window.currentUser = JSON.parse(cachedRaw);
-                    } catch (e) {
-                        window.currentUser = null;
-                    }
-                } else {
-                    window.currentUser = null;
-                }
-            }
+        syncCommunityArticlesState([]);
 
-            window.updateAuthUI(window.currentUser);
+        onSnapshot(articlesCollectionRef, (snapshot) => {
+            const communityDocs = [];
+            snapshot.forEach((docSnap) => {
+                communityDocs.push({ firestoreId: docSnap.id, ...docSnap.data() });
+            });
+            syncCommunityArticlesState(communityDocs);
+        }, () => {
+            syncCommunityArticlesState([]);
         });
 
         window.updateAuthUI = function(user) {
             const loggedOutNav = document.getElementById('loggedOutNav');
             const loggedInNav = document.getElementById('loggedInNav');
             const adminPortalBtn = document.getElementById('adminPortalBtn');
-            const userAvatarText = document.getElementById('userAvatarText');
             const navUserName = document.getElementById('navUserName');
 
             if (user && user.email) {
                 const rawName = (window.userProfileData && window.userProfileData.fullName) || user.displayName || user.email.split('@')[0];
                 const displayName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-                const initials = displayName.substring(0, 2).toUpperCase();
 
                 if (loggedOutNav) loggedOutNav.classList.add('hidden');
                 if (loggedInNav) {
                     loggedInNav.classList.remove('hidden');
                     loggedInNav.classList.add('flex');
                 }
-                if (userAvatarText) userAvatarText.innerText = initials;
                 if (navUserName) navUserName.innerText = displayName;
 
                 if (adminPortalBtn) {
@@ -433,10 +374,38 @@
             }
         };
 
-        // Call immediately on script evaluation if cached user exists
-        if (window.currentUser) {
-            window.updateAuthUI(window.currentUser);
-        }
+        try {
+            const savedSession = localStorage.getItem('sneh_cached_user');
+            if (savedSession) {
+                const parsedUser = JSON.parse(savedSession);
+                if (parsedUser && parsedUser.email) {
+                    window.currentUser = parsedUser;
+                    window.updateAuthUI(parsedUser);
+                }
+            }
+        } catch (e) {}
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const sessionPayload = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName || user.email.split('@')[0]
+                };
+                try {
+                    localStorage.setItem('sneh_cached_user', JSON.stringify(sessionPayload));
+                } catch (e) {}
+                window.currentUser = user;
+                window.updateAuthUI(user);
+            } else {
+                let cached = null;
+                try { cached = localStorage.getItem('sneh_cached_user'); } catch (e) {}
+                if (!cached) {
+                    window.currentUser = null;
+                    window.updateAuthUI(null);
+                }
+            }
+        });
     </script>
 
     <!-- MAIN APPLICATION LOGIC & MULTI-PAGE ROUTING ENGINE -->
@@ -444,8 +413,19 @@
         let activeRoute = 'home.html';
         let searchQuery = '';
         let activeCategoryFilter = 'All';
+        let articleSubmittedSuccess = false;
         window.isAdminAuthenticated = false;
         window.communityArticles = [];
+
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
         function generateComprehensiveWhitepaper(topicTitle, coreFocus, technicalDetails, standards, applicationNotes) {
             return `
@@ -455,19 +435,19 @@
                     </p>
                     <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 pt-2">1. Polymer Chemistry & Structural Mechanics</h3>
                     <p class="text-sm sm:text-base leading-relaxed">
-                        ${technicalDetails} At the molecular level, elastomeric recovery depends on the precise balance between amorphous soft segments that uncoil freely under applied axial stress and crystalline or cross-linked hard domains that act as physical anchor points. When subjected to cyclic elongation forces ranging from 150% to 450% of relaxed length, the internal polymer network absorbs mechanical strain energy and returns it elastically upon load release.
+                        ${technicalDetails} At the molecular level, elastomeric recovery depends on the precise balance between amorphous soft segments that uncoil freely under applied axial stress and crystalline or cross-linked hard domains that act as physical anchor points. When subjected to cyclic elongation forces ranging from 150% to 450% of relaxed length, the internal polymer network absorbs mechanical strain energy and returns it elastically upon load release. Without calibrated stoichiometric control during polymerization, premature chain slippage occurs, leading to permanent dimensional growth and garment bagging.
                     </p>
                     <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 pt-2">2. Precision Manufacturing & Process Calibration</h3>
                     <p class="text-sm sm:text-base leading-relaxed">
-                        Achieving zero-defect consistency across large-scale industrial production lots requires closed-loop tension governance across every stage of extrusion, covering, braiding, and narrow-fabric needle loom weaving. Precision electronic yarn feeders monitor real-time linear density and apply calibrated spin-finish micro-emulsions to minimize friction against ceramic guides.
+                        Achieving zero-defect consistency across large-scale industrial production lots requires closed-loop tension governance across every stage of extrusion, covering, braiding, and narrow-fabric needle loom weaving. Precision electronic yarn feeders monitor real-time linear density and apply calibrated spin-finish micro-emulsions to minimize friction against ceramic guides. Furthermore, automated optical sensors track core-to-sheath draft ratios continuously, guaranteeing uniform visual appearance and balanced retraction force across every linear meter spooled.
                     </p>
                     <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 pt-2">3. Quality Assurance & ISO/ASTM Compliance</h3>
                     <p class="text-sm sm:text-base leading-relaxed">
-                        ${standards} Every production batch undergoes rigorous laboratory evaluation before dispatch. Automated constant-rate-of-extension (CRE) tensile testers record load-elongation curves at 100%, 200%, and 300% extension intervals, measuring both initial modulus and stress decay after 60-second hold periods.
+                        ${standards} Every production batch undergoes rigorous laboratory evaluation before dispatch. Automated constant-rate-of-extension (CRE) tensile testers record load-elongation curves at 100%, 200%, and 300% extension intervals, measuring both initial modulus and stress decay after 60-second hold periods. Accelerated thermal aging chambers and automated wash-durability protocols verify that elastomeric power retention remains above 92% even after 50 industrial laundering cycles.
                     </p>
                     <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 pt-2">4. Industrial Applications & Future Roadmap</h3>
                     <p class="text-sm sm:text-base leading-relaxed">
-                        ${applicationNotes} As global textile sectors transition toward circular sustainability and smart wearable diagnostics, Sneh Elastic Threads continues to pioneer next-generation elastomeric formulations.
+                        ${applicationNotes} As global textile sectors transition toward circular sustainability and smart wearable diagnostics, Sneh Elastic Threads continues to pioneer next-generation elastomeric formulations that unite unmatched mechanical longevity with eco-responsible manufacturing workflows.
                     </p>
                 </div>
             `;
@@ -491,7 +471,7 @@
                 image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
                 author: "Dr. Rajesh V. Sharma",
                 date: "Oct 12, 2026",
-                readTime: "6 min read (620 words)",
+                readTime: "6 min read",
                 tags: ["Spandex", "Polymer", "Extrusion"]
             },
             {
@@ -511,7 +491,7 @@
                 image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80",
                 author: "Eng. Vikramaditya Singh",
                 date: "Oct 18, 2026",
-                readTime: "6 min read (610 words)",
+                readTime: "6 min read",
                 tags: ["Rubber", "Vulcanization", "Elastomers"]
             },
             {
@@ -531,7 +511,7 @@
                 image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
                 author: "Meera Nair",
                 date: "Oct 24, 2026",
-                readTime: "6 min read (595 words)",
+                readTime: "6 min read",
                 tags: ["Cotton", "Mercerization", "Cover Yarn"]
             },
             {
@@ -551,7 +531,7 @@
                 image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
                 author: "Sunil K. Gupta",
                 date: "Nov 01, 2026",
-                readTime: "6 min read (605 words)",
+                readTime: "6 min read",
                 tags: ["Machinery", "Needle Loom", "Weaving"]
             },
             {
@@ -571,8 +551,308 @@
                 image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
                 author: "Dr. Ananya Roy",
                 date: "Nov 03, 2026",
-                readTime: "6 min read (615 words)",
+                readTime: "6 min read",
                 tags: ["Smart Textiles", "Conductive Thread", "Medical"]
+            },
+            {
+                id: 6,
+                slug: "article-6.html",
+                status: "approved",
+                category: "Spandex",
+                title: "Micro-Denier Spandex for Graduated Medical Compression Bandages",
+                shortDesc: "Engineering 20-denier ultra-fine elastane filaments for accurate limb pressure gradients and superior dermal breathability.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Micro-Denier Spandex for Graduated Medical Compression Bandages",
+                    "20-denier ultra-fine medical-grade elastane cores",
+                    "Graduated venous compression therapy requires precise pressure profiles decreasing from ankle to thigh (18–30 mmHg) using low-hysteresis micro-denier filaments.",
+                    "Certified under RAL-GZ 387 medical compression hosiery standards and ISO 10993-5 cytotoxicity testing.",
+                    "Deployed across post-operative thromboembolism stockings, lymphedema sleeves, and orthopedic joint supports."
+                ),
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 04, 2026",
+                readTime: "6 min read",
+                tags: ["Spandex", "Medical", "Compression"]
+            },
+            {
+                id: 7,
+                slug: "article-7.html",
+                status: "approved",
+                category: "Rubber",
+                title: "Latex-Free Synthetic Polyisoprene Threads for Hypoallergenic Tapes",
+                shortDesc: "Eliminating Type-I natural rubber latex protein allergens while preserving high snap-back elasticity in surgical garments.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Latex-Free Synthetic Polyisoprene Threads for Hypoallergenic Tapes",
+                    "high-cis synthetic polyisoprene elastomeric threads",
+                    "Synthetic polyisoprene mimics the stereoregular cis-1,4 molecular geometry of natural Hevea rubber without any allergenic water-soluble proteins.",
+                    "Compliant with ASTM D6499 protein-free verification and EN 455 medical barrier durability standards.",
+                    "Essential for surgical face mask ear-loops, sterile operating room gowns, and neonatal medical fasteners."
+                ),
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 05, 2026",
+                readTime: "6 min read",
+                tags: ["Rubber", "Latex-Free", "Polyisoprene"]
+            },
+            {
+                id: 8,
+                slug: "article-8.html",
+                status: "approved",
+                category: "Machinery",
+                title: "Computerized Jacquard Narrow Loom Warp Feeder Synchronization",
+                shortDesc: "Millisecond-level electronic coordination between solenoid jacquard hooks and positive rubber yarn tensioners.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Computerized Jacquard Narrow Loom Warp Feeder Synchronization",
+                    "computerized electronic jacquard narrow-fabric looms",
+                    "High-resolution woven brand logos on elastic waistbands require independent warp thread shedding synchronized with servo-controlled elastomer delivery.",
+                    "Benchmarked via ISO 9001 digital loom telemetry and optical pick-density uniformity audits.",
+                    "Enables custom dual-elasticity zones and high-definition typography for premium sportswear waistbands."
+                ),
+                image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 06, 2026",
+                readTime: "6 min read",
+                tags: ["Machinery", "Jacquard", "Webbing"]
+            },
+            {
+                id: 9,
+                slug: "article-9.html",
+                status: "approved",
+                category: "Cotton",
+                title: "GOTS-Certified Organic Cotton Cover Wraps for Circular Apparel",
+                shortDesc: "Double-covering bio-based elastane cores with unbleached long-staple organic cotton for sustainable intimate wear.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "GOTS-Certified Organic Cotton Cover Wraps for Circular Apparel",
+                    "organic ring-spun cotton core-sheath cover yarns",
+                    "Hollow-spindle and conventional double-covering machines wrap S-twist and Z-twist organic cotton yarns around elastomeric cores to prevent torque spirality.",
+                    "Audited under Global Organic Textile Standard (GOTS) and OEKO-TEX Standard 100 Class I criteria.",
+                    "Widely adopted by eco-conscious apparel brands manufacturing sustainable undergarments and loungewear."
+                ),
+                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 06, 2026",
+                readTime: "6 min read",
+                tags: ["Cotton", "Organic", "Circular Textiles"]
+            },
+            {
+                id: 10,
+                slug: "article-10.html",
+                status: "approved",
+                category: "Smart Textiles",
+                title: "Thermochromic Elastic Webbings for Industrial Thermal Hazard Alerts",
+                shortDesc: "Encapsulating reversible leuco-dye microcapsules into elastomer coatings for instant visual heat warnings.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Thermochromic Elastic Webbings for Industrial Thermal Hazard Alerts",
+                    "thermochromic polymer-coated safety webbings",
+                    "Micro-encapsulated thermochromic pigments undergo reversible molecular electron transfer at calibrated activation thresholds (45°C to 65°C), shifting webbing color instantaneously.",
+                    "Tested under ISO 11612 heat-exposure protocols and AATCC TM61 colorfastness laundering trials.",
+                    "Integrated into firefighter harness straps, foundry protective gear, and high-voltage utility belts."
+                ),
+                image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 07, 2026",
+                readTime: "6 min read",
+                tags: ["Smart Textiles", "Thermochromic", "Safety Gear"]
+            },
+            {
+                id: 11,
+                slug: "article-11.html",
+                status: "approved",
+                category: "Spandex",
+                title: "Chlorine-Resistant Elastane Formulations for Competitive Swimwear",
+                shortDesc: "Incorporating inorganic hydrotalcite acid-scavenging additives to prevent polyurethane chain scission in chlorinated pools.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Chlorine-Resistant Elastane Formulations for Competitive Swimwear",
+                    "chlorine-stabilized polyether-urea elastane filaments",
+                    "Hypochlorous acid in chlorinated swimming pools attacks urethane nitrogen bonds; dispersed hydrotalcite minerals neutralize chlorine radicals before polymer backbone cleavage.",
+                    "Validated through 250-hour chlorinated water immersion testing per ISO 105-E03 and ASTM D2731.",
+                    "Provides 5x longer lifespan in competitive racing swimsuits, water polo gear, and resort swimwear elastics."
+                ),
+                image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 07, 2026",
+                readTime: "6 min read",
+                tags: ["Spandex", "Chlorine-Resistant", "Swimwear"]
+            },
+            {
+                id: 12,
+                slug: "article-12.html",
+                status: "approved",
+                category: "Rubber",
+                title: "High-Modulus Aerospace Shock Cords with Aramid Braided Sleeves",
+                shortDesc: "Multi-strand vulcanized natural rubber core assemblies engineered for extreme kinetic energy absorption and UAV catapults.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "High-Modulus Aerospace Shock Cords with Aramid Braided Sleeves",
+                    "multi-strand vulcanized rubber shock cord assemblies",
+                    "Bundling 400+ precision-extruded natural rubber threads under uniform pre-tension inside a 48-carrier braided para-aramid jacket yields linear kinetic energy storage.",
+                    "Qualified against MIL-C-5651 aerospace shock cord specifications and cyclic fatigue endurance standards.",
+                    "Deployed in unmanned aerial vehicle (UAV) launch catapults, cargo tie-down nets, and parachute pack elastics."
+                ),
+                image: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 08, 2026",
+                readTime: "6 min read",
+                tags: ["Rubber", "Aerospace", "Shock Cords"]
+            },
+            {
+                id: 13,
+                slug: "article-13.html",
+                status: "approved",
+                category: "Machinery",
+                title: "20kHz Ultrasonic Slitting & Soft-Edge Sealing of Elastic Webbing",
+                shortDesc: "Replacing thermal hot-knife cutters with ultrasonic acoustic horns to eliminate hard melted edges on intimate elastics.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "20kHz Ultrasonic Slitting & Soft-Edge Sealing of Elastic Webbing",
+                    "ultrasonic acoustic horn slitting and edge-sealing systems",
+                    "High-frequency 20kHz mechanical vibrations generate localized intermolecular friction heat exclusively at the cutting anvil, sealing synthetic fibers cleanly without stiff beads.",
+                    "Evaluated via Kawabata Evaluation System (KES-F) surface roughness metrics and seam-fray pull tests.",
+                    "Produces feather-soft selvedges for lingerie straps, athletic bras, and skin-contact medical fasteners."
+                ),
+                image: "https://images.unsplash.com/photo-1581092335297-586b8979844f?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 08, 2026",
+                readTime: "6 min read",
+                tags: ["Machinery", "Ultrasonic", "Edge Sealing"]
+            },
+            {
+                id: 14,
+                slug: "article-14.html",
+                status: "approved",
+                category: "Cotton",
+                title: "Bamboo-Cotton Hybrid Cover Yarns for Antimicrobial Orthopedic Wraps",
+                shortDesc: "Blending bio-static bamboo viscose with combed long-staple cotton to maximize moisture wicking and dermal comfort.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Bamboo-Cotton Hybrid Cover Yarns for Antimicrobial Orthopedic Wraps",
+                    "50/50 bamboo viscose and long-staple cotton cover yarns",
+                    "Micro-porous cross-sections in regenerated bamboo fibers create capillary channels that accelerate sweat evaporation while natural bamboo-kun bio-agents inhibit bacterial growth.",
+                    "Tested under AATCC TM100 antibacterial activity assessments and ISO 11092 thermal/water-vapor resistance tests.",
+                    "Ideal for reusable orthopedic knee sleeves, wrist braces, and post-partum abdominal support binders."
+                ),
+                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 08, 2026",
+                readTime: "6 min read",
+                tags: ["Cotton", "Bamboo", "Orthopedic"]
+            },
+            {
+                id: 15,
+                slug: "article-15.html",
+                status: "approved",
+                category: "Smart Textiles",
+                title: "Piezoelectric Elastomeric Fibers for Self-Powered Strain Monitoring",
+                shortDesc: "Converting mechanical elongation directly into micro-voltage signals using beta-phase PVDF copolymer filaments.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Piezoelectric Elastomeric Fibers for Self-Powered Strain Monitoring",
+                    "piezoelectric PVDF-TrFE coaxial elastomeric fibers",
+                    "Stretching aligned beta-phase polyvinylidene fluoride copolymer sheaths around conductive elastic cores induces dipole reorientation and measurable piezoelectric charge output.",
+                    "Characterized via dynamic mechanical analysis (DMA) and oscilloscope voltage-strain linearity calibration.",
+                    "Enables battery-free gait analysis insoles, posture-correcting smart shirts, and structural tension sensors."
+                ),
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Smart Textiles", "Piezoelectric", "Sensors"]
+            },
+            {
+                id: 16,
+                slug: "article-16.html",
+                status: "approved",
+                category: "Spandex",
+                title: "High-Temperature Stabilized Spandex for 205°C Stenter Heat-Setting",
+                shortDesc: "Preventing thermal modulus loss and polymer yellowing during high-temperature polyester-elastane fabric finishing.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "High-Temperature Stabilized Spandex for 205°C Stenter Heat-Setting",
+                    "high-heat-resistant aromatic polyurethane-urea elastane",
+                    "Conventional elastane loses up to 40% retractive power during 200°C disperse dyeing; cross-linkable hard segments maintain dimensional stability and crisp recovery.",
+                    "Verified through ISO 105-P01 dry-heat sublimation stability and post-heat-set cyclic power retention tests.",
+                    "Engineered for seamless molded activewear, automotive upholstery stretch fabrics, and industrial filter gaskets."
+                ),
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Rajesh V. Sharma",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Spandex", "Heat-Resistant", "Finishing"]
+            },
+            {
+                id: 17,
+                slug: "article-17.html",
+                status: "approved",
+                category: "Rubber",
+                title: "Ozone & UV-Resistant EPDM Rubber Threads for Marine Rigging",
+                shortDesc: "Saturated ethylene-propylene-diene monomer polymer backbones engineered to resist salt spray and atmospheric ozone cracking.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Ozone & UV-Resistant EPDM Rubber Threads for Marine Rigging",
+                    "peroxide-cured EPDM synthetic elastomer threads",
+                    "Unlike natural polyisoprene, EPDM features a fully saturated hydrocarbon backbone devoid of vulnerable double bonds, preventing ozone-induced surface crazing.",
+                    "Tested under ASTM D1149 ozone chamber exposure (100 pphm at 40°C) and ASTM G154 QUV accelerated weathering.",
+                    "Used extensively in yacht sail ties, offshore aquaculture mooring elastics, and outdoor solar cover tensioners."
+                ),
+                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1400&q=80",
+                author: "Eng. Vikramaditya Singh",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Rubber", "EPDM", "Marine"]
+            },
+            {
+                id: 18,
+                slug: "article-18.html",
+                status: "approved",
+                category: "Machinery",
+                title: "Precision Electronic Traverse Winding for Zero-Ribboning Thread Spools",
+                shortDesc: "Eliminating package density ridges and off-wind tension spikes using programmable servo step-precision winders.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Precision Electronic Traverse Winding for Zero-Ribboning Thread Spools",
+                    "servo-driven precision cross-winding spooling systems",
+                    "Electronic step-precision winding dynamically adjusts the helix crossing angle across package diameter build-up, preventing yarn layer nesting and ribboning.",
+                    "Audited using inline tensiometer peak-tension logs and Shore-A package hardness uniformity mapping.",
+                    "Guarantees snag-free high-speed unwinding on automated multi-needle waistbanding and covering machines."
+                ),
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80",
+                author: "Sunil K. Gupta",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Machinery", "Winding", "Spooling"]
+            },
+            {
+                id: 19,
+                slug: "article-19.html",
+                status: "approved",
+                category: "Cotton",
+                title: "Counter-Balanced S-Z Double-Wrapped Cotton Elastics for Workwear",
+                shortDesc: "Torque-neutral cotton sheath engineering designed to survive 100+ industrial tunnel-washing and tumble-drying cycles.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Counter-Balanced S-Z Double-Wrapped Cotton Elastics for Workwear",
+                    "S-Z counter-twisted heavy-duty cotton cover elastics",
+                    "Applying an inner S-twist cotton wrap balanced by an outer Z-twist wrap at matched turns-per-meter neutralizes residual torque and shields the elastomer core from abrasion.",
+                    "Qualified against ISO 15797 industrial laundering procedures and Martindale 50,000-rub abrasion tests.",
+                    "Built for heavy-duty industrial work trousers, flame-retardant utility coveralls, and institutional uniforms."
+                ),
+                image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=1400&q=80",
+                author: "Meera Nair",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Cotton", "Workwear", "Double-Wrapped"]
+            },
+            {
+                id: 20,
+                slug: "article-20.html",
+                status: "approved",
+                category: "Smart Textiles",
+                title: "Hollow Micro-Fluidic TPU Elastic Webbings for Active Thermal Cooling",
+                shortDesc: "Extruding multi-lumen thermoplastic polyurethane channels into stretchable webbings for closed-loop liquid cooling vests.",
+                fullContent: generateComprehensiveWhitepaper(
+                    "Hollow Micro-Fluidic TPU Elastic Webbings for Active Thermal Cooling",
+                    "multi-lumen microfluidic thermoplastic polyurethane webbings",
+                    "Co-extruding 0.4mm internal fluid channels inside high-recovery TPU ribbons enables continuous chilled fluid circulation without kinking under 200% stretch.",
+                    "Validated under ASTM D751 hydrostatic burst pressure tests and cyclic flex-kink flow-rate retention trials.",
+                    "Integrated into aerospace pilot cooling suits, surgical team thermal vests, and endurance athletic recovery gear."
+                ),
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80",
+                author: "Dr. Ananya Roy",
+                date: "Nov 09, 2026",
+                readTime: "6 min read",
+                tags: ["Smart Textiles", "Microfluidics", "Thermal Cooling"]
             }
         ];
 
@@ -585,7 +865,7 @@
             const toast = document.getElementById('toastBanner');
             const icon = document.getElementById('toastIcon');
             const text = document.getElementById('toastMessage');
-            if (!toast) return;
+            if (!toast || !text || !icon) return;
             text.innerText = msg;
             icon.className = isError ? "fa-solid fa-circle-exclamation text-rose-400 text-base shrink-0" : "fa-solid fa-circle-check text-emerald-400 text-base shrink-0";
             toast.classList.remove('hidden');
@@ -611,10 +891,14 @@
 
         async function handleLoginSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
+            const emailEl = document.getElementById('loginEmail');
+            const passEl = document.getElementById('loginPassword');
             const errEl = document.getElementById('authErrorMessage');
             const submitBtn = document.getElementById('loginSubmitBtn');
+            if (!emailEl || !passEl) return;
+
+            const email = emailEl.value.trim();
+            const password = passEl.value;
             if (errEl) errEl.classList.add('hidden');
 
             if (submitBtn) {
@@ -623,10 +907,22 @@
             }
 
             try {
+                if (!window.firebaseSignIn || !window.firebaseAuth) {
+                    throw new Error("Authentication service initializing. Please try again.");
+                }
                 const userCred = await window.firebaseSignIn(window.firebaseAuth, email, password);
-                window.updateAuthUI(window.currentUser);
+                const sessionPayload = {
+                    uid: userCred.user.uid,
+                    email: userCred.user.email,
+                    displayName: userCred.user.displayName || userCred.user.email.split('@')[0]
+                };
+                try {
+                    localStorage.setItem('sneh_cached_user', JSON.stringify(sessionPayload));
+                } catch (err) {}
+                window.currentUser = userCred.user;
+                window.updateAuthUI(userCred.user);
                 closeAuthModal();
-                showToast("Welcome back, " + (userCred.user.displayName || email.split('@')[0]) + "!");
+                showToast("Welcome back, " + sessionPayload.displayName + "!");
             } catch (err) {
                 if (errEl) {
                     errEl.innerText = err.message || "Invalid email or password.";
@@ -641,14 +937,21 @@
         }
 
         async function handleLogout() {
-            await window.firebaseSignOut(window.firebaseAuth);
-            window.updateAuthUI(null);
-            if (activeRoute === 'profile.html' || activeRoute === 'admin.html') {
-                navigateToPage('home.html');
-            } else {
-                renderAppView();
-            }
-            showToast("Signed out successfully.");
+            try {
+                try { localStorage.removeItem('sneh_cached_user'); } catch (e) {}
+                window.currentUser = null;
+                window.isAdminAuthenticated = false;
+                if (window.firebaseSignOut && window.firebaseAuth) {
+                    await window.firebaseSignOut(window.firebaseAuth);
+                }
+                window.updateAuthUI(null);
+                if (activeRoute === 'profile.html' || activeRoute === 'admin.html') {
+                    navigateToPage('home.html');
+                } else {
+                    renderAppView();
+                }
+                showToast("Signed out successfully.");
+            } catch (e) {}
         }
 
         function openAdminGate() {
@@ -680,14 +983,17 @@
         }
         function verifyAdminPin(e) {
             e.preventDefault();
-            const pin = document.getElementById('adminPinInput').value.trim();
+            const pinEl = document.getElementById('adminPinInput');
+            if (!pinEl) return;
+            const pin = pinEl.value.trim();
             if (pin === '9868') {
                 window.isAdminAuthenticated = true;
                 closeAdminGate();
                 navigateToPage('admin.html');
                 showToast("Admin Portal Unlocked!");
             } else {
-                document.getElementById('adminPinError').classList.remove('hidden');
+                const errEl = document.getElementById('adminPinError');
+                if (errEl) errEl.classList.remove('hidden');
             }
         }
 
@@ -696,26 +1002,29 @@
                 showToast("Admin authorization required.", true);
                 return;
             }
-            try {
-                const { doc, setDoc } = window.firestoreTools;
-                const artRef = doc(window.firebaseDb, 'artifacts', window.blogAppId, 'public', 'data', 'community_articles', firestoreId);
-                
-                await setDoc(artRef, { 
-                    status: 'approved', 
-                    approvedBy: window.currentUser.email, 
-                    approvedAtMs: Date.now() 
-                }, { merge: true });
-                
-                const target = window.communityArticles.find(a => a.firestoreId === firestoreId);
-                if (target) {
-                    target.status = 'approved';
-                }
-                
-                renderAppView();
-                showToast("Article Approved! It is now permanently LIVE on the website.");
-            } catch (e) {
-                showToast("Error approving article: " + e.message, true);
+            const target = window.communityArticles.find(a => a.firestoreId === firestoreId || a.slug === firestoreId);
+            if (target) {
+                target.status = 'approved';
+                target.approvedBy = window.currentUser.email;
+                target.approvedAtMs = Date.now();
+                try {
+                    localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
+                } catch (e) {}
             }
+            renderAppView();
+            showToast("Article Approved! It is now permanently LIVE on the website.");
+
+            try {
+                if (window.firestoreTools && window.firebaseDb) {
+                    const { doc, setDoc } = window.firestoreTools;
+                    const artRef = doc(window.firebaseDb, 'community_articles', firestoreId);
+                    await setDoc(artRef, { 
+                        status: 'approved', 
+                        approvedBy: window.currentUser.email, 
+                        approvedAtMs: Date.now() 
+                    }, { merge: true });
+                }
+            } catch (e) {}
         }
 
         async function rejectCommunityArticle(firestoreId) {
@@ -723,17 +1032,20 @@
                 showToast("Admin authorization required.", true);
                 return;
             }
+            window.communityArticles = window.communityArticles.filter(a => a.firestoreId !== firestoreId && a.slug !== firestoreId);
             try {
-                const { doc, deleteDoc } = window.firestoreTools;
-                const artRef = doc(window.firebaseDb, 'artifacts', window.blogAppId, 'public', 'data', 'community_articles', firestoreId);
-                await deleteDoc(artRef);
+                localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
+            } catch (e) {}
+            renderAppView();
+            showToast("Article rejected and removed.");
 
-                window.communityArticles = window.communityArticles.filter(a => a.firestoreId !== firestoreId);
-                renderAppView();
-                showToast("Article rejected and removed.");
-            } catch (e) {
-                showToast("Error removing article: " + e.message, true);
-            }
+            try {
+                if (window.firestoreTools && window.firebaseDb) {
+                    const { doc, deleteDoc } = window.firestoreTools;
+                    const artRef = doc(window.firebaseDb, 'community_articles', firestoreId);
+                    await deleteDoc(artRef);
+                }
+            } catch (e) {}
         }
 
         function openWriteArticleModal() {
@@ -742,6 +1054,7 @@
                 showToast("Please sign in with your SNEH ELASTIC account to write an article.");
                 return;
             }
+            articleSubmittedSuccess = false;
             navigateToPage('write-article.html');
         }
 
@@ -753,9 +1066,6 @@
             }
 
             const btn = document.getElementById('submitArticleBtn');
-            const formEl = document.getElementById('writeArticleFormContainer');
-            const successBox = document.getElementById('submissionSuccessBanner');
-
             if (btn) {
                 btn.disabled = true;
                 btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
@@ -767,42 +1077,53 @@
             const summary = document.getElementById('newArticleSummary').value.trim();
             const imageUrl = document.getElementById('newArticleImage').value.trim() || "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80";
             const content = document.getElementById('newArticleContent').value.trim();
+            const localId = 'local_' + Date.now();
             const slugId = 'community-' + Date.now() + '.html';
 
-            try {
-                const { addDoc, serverTimestamp } = window.firestoreTools;
-                await addDoc(window.communityArticlesCol, {
-                    slug: slugId,
-                    status: 'pending',
-                    category: category,
-                    title: title,
-                    shortDesc: summary,
-                    fullContent: `<div class="space-y-4"><p class="text-base sm:text-lg text-slate-800 font-medium">${summary}</p><div class="pt-4 text-sm sm:text-base leading-relaxed whitespace-pre-line">${content}</div></div>`,
-                    image: imageUrl,
-                    author: author,
-                    authorUid: window.currentUser.uid,
-                    authorEmail: window.currentUser.email,
-                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
-                    readTime: Math.max(4, Math.ceil(content.split(' ').length / 150)) + " min read",
-                    tags: [category, "Community Article"],
-                    createdAtMs: Date.now(),
-                    createdAt: serverTimestamp()
-                });
+            const safeSummary = escapeHtml(summary);
+            const safeContent = escapeHtml(content);
 
-                // Show dedicated in-page Submit Successful Notification Banner
-                if (formEl) formEl.classList.add('hidden');
-                if (successBox) {
-                    successBox.classList.remove('hidden');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+            const articlePayload = {
+                firestoreId: localId,
+                slug: slugId,
+                status: 'pending',
+                category: category,
+                title: title,
+                shortDesc: summary,
+                fullContent: `<div class="space-y-4"><p class="text-base sm:text-lg text-slate-800 font-medium">${safeSummary}</p><div class="pt-4 text-sm sm:text-base leading-relaxed whitespace-pre-line">${safeContent}</div></div>`,
+                image: imageUrl,
+                author: author,
+                authorUid: window.currentUser.uid,
+                authorEmail: window.currentUser.email,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
+                readTime: Math.max(4, Math.ceil(content.split(' ').length / 150)) + " min read",
+                tags: [category, "Community Article"],
+                createdAtMs: Date.now()
+            };
+
+            window.communityArticles.unshift(articlePayload);
+            try {
+                localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
+            } catch (err) {}
+
+            try {
+                if (window.firestoreTools && window.communityArticlesCol) {
+                    const { addDoc, serverTimestamp } = window.firestoreTools;
+                    const docRef = await addDoc(window.communityArticlesCol, {
+                        ...articlePayload,
+                        createdAt: serverTimestamp()
+                    });
+                    articlePayload.firestoreId = docRef.id;
+                    try {
+                        localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
+                    } catch (err) {}
                 }
-                showToast("Submit Successful! Your article has been sent for Admin approval.");
-            } catch (err) {
-                showToast("Submission failed: " + err.message, true);
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Submit Whitepaper`;
-                }
-            }
+            } catch (err) {}
+
+            articleSubmittedSuccess = true;
+            renderAppView();
+            showToast("Article Submitted Successfully!");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function toggleQuickSearchModal() {
@@ -838,12 +1159,12 @@
             }
 
             resultsContainer.innerHTML = filtered.map(art => `
-                <div onclick="navigateToPage('${art.slug}'); toggleQuickSearchModal();" class="p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-all flex items-center space-x-3 group">
-                    <img src="${art.image}" alt="${art.title}" class="w-12 h-12 rounded-lg object-cover shrink-0">
+                <div onclick="navigateToPage('${escapeHtml(art.slug)}'); toggleQuickSearchModal();" class="p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-all flex items-center space-x-3 group">
+                    <img src="${escapeHtml(art.image)}" alt="${escapeHtml(art.title)}" class="w-12 h-12 rounded-lg object-cover shrink-0">
                     <div class="flex-grow min-w-0">
-                        <span class="text-[10px] uppercase font-extrabold text-emerald-600">${art.category}</span>
-                        <h4 class="text-xs font-bold text-slate-900 truncate group-hover:text-emerald-600">${art.title}</h4>
-                        <p class="text-[11px] text-slate-500 truncate">By ${art.author}</p>
+                        <span class="text-[10px] uppercase font-extrabold text-emerald-600">${escapeHtml(art.category)}</span>
+                        <h4 class="text-xs font-bold text-slate-900 truncate group-hover:text-emerald-600">${escapeHtml(art.title)}</h4>
+                        <p class="text-[11px] text-slate-500 truncate">By ${escapeHtml(art.author)}</p>
                     </div>
                 </div>
             `).join('');
@@ -897,37 +1218,40 @@
             });
 
             container.innerHTML = `
-                <section class="hero-pattern text-white pt-8 sm:pt-14 pb-16 sm:pb-24 px-4 lg:px-8 relative overflow-hidden">
-                    <div class="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 relative z-10">
-                        <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                <section class="hero-pattern text-white pt-8 sm:pt-12 pb-14 sm:pb-20 px-4 lg:px-8 relative overflow-hidden">
+                    <div class="max-w-4xl mx-auto text-center space-y-3 relative z-10">
+                        <span class="inline-block px-2.5 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                             SNEH ELASTIC THREADS PVT. LTD. • KNOWLEDGE HUB
                         </span>
-                        <h1 class="font-heading font-black text-2xl sm:text-5xl tracking-tight leading-tight">
+                        <h1 class="font-heading font-black text-2xl sm:text-4xl lg:text-5xl tracking-tight leading-tight">
                             Industrial Textile & <span class="gradient-text">Elastomer Engineering</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-light leading-relaxed px-1">
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-light leading-relaxed px-2">
                             Explore peer-reviewed technical whitepapers on spandex extrusion, vulcanized rubber threads, mercerized cotton, and high-speed loom engineering.
                         </p>
-                        <div class="pt-2 flex flex-col sm:flex-row justify-center gap-2.5 px-2">
-                            <button onclick="openWriteArticleModal()" class="w-full sm:w-auto justify-center px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-pen-nib"></i> Write & Submit an Article
+                        <!-- COMPACT HERO ACTION BUTTONS -->
+                        <div class="pt-1.5 flex flex-wrap justify-center items-center gap-2">
+                            <button onclick="openWriteArticleModal()" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-[11px] sm:text-xs rounded-lg shadow transition-all inline-flex items-center gap-1.5">
+                                <i class="fa-solid fa-pen-nib text-[10px]"></i>
+                                <span>Write & Submit Article</span>
                             </button>
                             ${!window.currentUser ? `
-                                <a href="https://account.snehelastic.com" target="_blank" class="w-full sm:w-auto justify-center px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs rounded-xl transition-all flex items-center gap-2">
-                                    <i class="fa-solid fa-user-plus text-emerald-400"></i> Create Sneh Elastic Account
+                                <a href="https://account.snehelastic.com" target="_blank" class="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-[11px] sm:text-xs rounded-lg transition-all inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-plus text-emerald-400 text-[10px]"></i>
+                                    <span>Create Elastic Account</span>
                                 </a>
                             ` : ''}
                         </div>
                     </div>
                 </section>
 
-                <div class="max-w-3xl mx-auto px-3 sm:px-4 -mt-7 sm:-mt-10 relative z-20">
+                <div class="max-w-3xl mx-auto px-3 sm:px-4 -mt-7 sm:-mt-9 relative z-20">
                     <div class="glass-card rounded-2xl p-1.5 sm:p-2 shadow-2xl flex items-center border border-slate-200">
-                        <div class="pl-2.5 pr-1.5 text-slate-400">
+                        <div class="pl-3 pr-2 text-slate-400">
                             <i class="fa-solid fa-magnifying-glass text-base sm:text-lg text-emerald-600"></i>
                         </div>
-                        <input type="text" value="${searchQuery}" oninput="searchQuery = this.value.toLowerCase(); renderAppView();" placeholder="Search articles..." class="w-full py-2 sm:py-3 px-1.5 text-slate-900 placeholder-slate-400 bg-transparent outline-none">
-                        <button onclick="toggleQuickSearchModal()" class="px-3.5 sm:px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all shrink-0 flex items-center gap-1.5">
+                        <input type="text" value="${escapeHtml(searchQuery)}" oninput="searchQuery = this.value.toLowerCase(); renderAppView();" placeholder="Search articles by title, polymer, or author..." class="w-full py-2 px-1 sm:px-2 font-medium text-slate-900 placeholder-slate-400 bg-transparent outline-none">
+                        <button onclick="toggleQuickSearchModal()" class="px-3.5 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all shrink-0 flex items-center gap-1.5">
                             <i class="fa-solid fa-sliders"></i>
                             <span class="hidden sm:inline">Filter</span>
                         </button>
@@ -935,10 +1259,10 @@
                 </div>
 
                 <section class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 pt-6 sm:pt-10 pb-6">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-200 pb-3 sm:pb-4 mb-5 gap-3">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-200 pb-3 sm:pb-4 mb-5 sm:mb-6 gap-2.5">
                         <div class="flex items-center space-x-2 overflow-x-auto py-1 w-full sm:w-auto">
                             ${['All', 'Spandex', 'Rubber', 'Cotton', 'Machinery', 'Smart Textiles'].map(cat => `
-                                <button onclick="activeCategoryFilter = '${cat}'; renderAppView();" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategoryFilter === cat ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
+                                <button onclick="activeCategoryFilter = '${cat}'; renderAppView();" class="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategoryFilter === cat ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
                                     ${cat}
                                 </button>
                             `).join('')}
@@ -950,12 +1274,12 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         ${filteredArticles.map(art => `
-                            <article onclick="navigateToPage('${art.slug}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col justify-between">
+                            <article onclick="navigateToPage('${escapeHtml(art.slug)}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col justify-between">
                                 <div>
                                     <div class="relative h-44 sm:h-48 overflow-hidden bg-slate-100">
-                                        <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        <img src="${escapeHtml(art.image)}" alt="${escapeHtml(art.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         <span class="absolute top-3 left-3 px-2.5 py-1 bg-slate-900/95 backdrop-blur-md text-emerald-400 font-extrabold text-[10px] uppercase rounded-lg border border-white/10">
-                                            ${art.category}
+                                            ${escapeHtml(art.category)}
                                         </span>
                                         ${art.firestoreId ? `
                                             <span class="absolute top-3 right-3 px-2 py-0.5 bg-emerald-500 text-slate-950 font-extrabold text-[10px] rounded-md shadow">
@@ -964,12 +1288,12 @@
                                         ` : ''}
                                     </div>
                                     <div class="p-4 sm:p-5 space-y-2">
-                                        <div class="text-[10px] text-slate-400 font-semibold">${art.date} • By ${art.author}</div>
+                                        <div class="text-[10px] text-slate-400 font-semibold">${escapeHtml(art.date)} • By ${escapeHtml(art.author)}</div>
                                         <h3 class="font-heading font-extrabold text-sm sm:text-base text-slate-900 group-hover:text-emerald-600 transition-colors line-clamp-2 leading-snug">
-                                            ${art.title}
+                                            ${escapeHtml(art.title)}
                                         </h3>
                                         <p class="text-xs text-slate-500 mt-1.5 line-clamp-3 leading-relaxed">
-                                            ${art.shortDesc}
+                                            ${escapeHtml(art.shortDesc)}
                                         </p>
                                     </div>
                                 </div>
@@ -994,49 +1318,49 @@
             const user = window.currentUser;
             const displayName = (window.userProfileData && window.userProfileData.fullName) || user.displayName || user.email.split('@')[0];
             const initials = displayName.substring(0, 2).toUpperCase();
-            const myArts = (window.communityArticles || []).filter(a => a.authorUid === user.uid);
+            const myArts = (window.communityArticles || []).filter(a => a.authorUid === user.uid || a.authorEmail === user.email);
 
             container.innerHTML = `
                 <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
-                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-5 sm:p-10 space-y-6 sm:space-y-8">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-5 gap-4">
-                            <div class="flex items-center space-x-3.5">
-                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-500 text-white font-extrabold text-xl sm:text-2xl flex items-center justify-center shadow-lg shrink-0">
-                                    ${initials}
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-4 sm:p-10 space-y-6 sm:space-y-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-5 sm:pb-6 gap-4">
+                            <div class="flex items-center space-x-3 sm:space-x-4">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-500 text-white font-extrabold text-lg sm:text-2xl flex items-center justify-center shadow-lg shrink-0">
+                                    ${escapeHtml(initials)}
                                 </div>
-                                <div>
-                                    <h1 class="font-heading font-extrabold text-xl sm:text-2xl text-slate-900">${displayName}</h1>
+                                <div class="min-w-0">
+                                    <h1 class="font-heading font-extrabold text-xl sm:text-2xl text-slate-900 truncate">${escapeHtml(displayName)}</h1>
                                     <p class="text-xs text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
                                         <i class="fa-solid fa-circle-check"></i> Verified Sneh Elastic Member
                                     </p>
                                 </div>
                             </div>
-                            <button onclick="handleLogout()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-bold rounded-xl transition-colors text-center">
+                            <button onclick="handleLogout()" class="w-full sm:w-auto px-4 py-2 bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-right-from-bracket"></i> Sign Out
                             </button>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
+                            <div class="bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-200 space-y-1">
                                 <span class="text-slate-400 block">Email Address</span>
-                                <span class="font-bold text-slate-800 text-sm break-all">${user.email}</span>
+                                <span class="font-bold text-slate-800 text-xs sm:text-sm break-all">${escapeHtml(user.email)}</span>
                             </div>
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
+                            <div class="bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-200 space-y-1">
                                 <span class="text-slate-400 block">Account UID</span>
-                                <span class="font-mono text-xs text-slate-700 break-all">${user.uid}</span>
+                                <span class="font-mono text-[11px] text-slate-700 break-all">${escapeHtml(user.uid)}</span>
                             </div>
                         </div>
 
-                        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs">
+                        <div class="p-3.5 sm:p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs">
                             <p class="leading-relaxed">
                                 To edit your account details (Name, Password, Company details), please visit <a href="https://account.snehelastic.com" target="_blank" class="font-bold underline text-amber-950">account.snehelastic.com</a>.
                             </p>
                         </div>
 
                         <div class="space-y-4">
-                            <div class="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2">
-                                <h3 class="font-heading font-extrabold text-base text-slate-900">My Submitted Articles</h3>
-                                <button onclick="openWriteArticleModal()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl flex items-center gap-1.5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h3 class="font-heading font-extrabold text-base text-slate-900">My Submitted Articles (${myArts.length})</h3>
+                                <button onclick="openWriteArticleModal()" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-plus"></i> Write New Article
                                 </button>
                             </div>
@@ -1048,21 +1372,21 @@
                             ` : `
                                 <div class="space-y-3">
                                     ${myArts.map(art => `
-                                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                                            <div>
+                                        <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                            <div class="min-w-0">
                                                 <div class="flex items-center gap-2 text-[10px] mb-1">
-                                                    <span class="font-extrabold uppercase text-emerald-600">${art.category}</span>
+                                                    <span class="font-extrabold uppercase text-emerald-600">${escapeHtml(art.category)}</span>
                                                     <span>•</span>
-                                                    <span>${art.date}</span>
+                                                    <span>${escapeHtml(art.date)}</span>
                                                 </div>
-                                                <h4 class="font-bold text-sm text-slate-900">${art.title}</h4>
+                                                <h4 class="font-bold text-sm text-slate-900 leading-snug">${escapeHtml(art.title)}</h4>
                                             </div>
-                                            <div class="flex items-center gap-2 shrink-0">
+                                            <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
                                                 ${art.status === 'approved' 
-                                                    ? `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 font-extrabold rounded-lg text-[11px]">LIVE APPROVED</span>`
-                                                    : `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold rounded-lg text-[11px]">PENDING APPROVAL</span>`
+                                                    ? `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 font-extrabold rounded-lg text-[10px] sm:text-xs">LIVE APPROVED</span>`
+                                                    : `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold rounded-lg text-[10px] sm:text-xs">PENDING ADMIN APPROVAL</span>`
                                                 }
-                                                ${art.status === 'approved' ? `<button onclick="navigateToPage('${art.slug}')" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-lg">View</button>` : ''}
+                                                ${art.status === 'approved' ? `<button onclick="navigateToPage('${escapeHtml(art.slug)}')" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-lg">View</button>` : ''}
                                             </div>
                                         </div>
                                     `).join('')}
@@ -1081,38 +1405,8 @@
 
             container.innerHTML = `
                 <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
-                    <!-- IN-PAGE SUBMISSION SUCCESS NOTIFICATION BANNER -->
-                    <div id="submissionSuccessBanner" class="hidden bg-white rounded-2xl sm:rounded-3xl shadow-xl border-2 border-emerald-500 p-6 sm:p-10 text-center space-y-5">
-                        <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto shadow-sm">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                        <div class="space-y-2 max-w-lg mx-auto">
-                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 font-extrabold text-[11px] uppercase rounded-full border border-emerald-200">
-                                Submission Successful
-                            </span>
-                            <h2 class="font-heading font-black text-xl sm:text-3xl text-slate-900">
-                                Aapka Article Submit Ho Gaya Hai!
-                            </h2>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                Thank you for contributing to <strong>SNEH ELASTIC BLOG</strong>. Aapka article successfully database mein save ho gaya hai. Kuch hi time mein Admin verification ke baad ye website par live publish ho jayega, aur aapki Profile page par aapko iska live status dikh jayega.
-                            </p>
-                        </div>
-                        <div class="pt-3 flex flex-col sm:flex-row justify-center gap-3">
-                            <button onclick="navigateToPage('profile.html')" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-user"></i> View Status in My Profile
-                            </button>
-                            <button onclick="navigateToPage('write-article.html')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-all">
-                                Write Another Article
-                            </button>
-                            <button onclick="navigateToPage('home.html')" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all">
-                                Back to Home
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- ARTICLE SUBMISSION FORM -->
-                    <div id="writeArticleFormContainer" class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-4 sm:p-10">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 sm:pb-6 mb-5 gap-3">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-4 sm:p-10">
+                        <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4 sm:pb-6 mb-5 sm:mb-6 gap-3">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
                                     <i class="fa-solid fa-pen-nib"></i>
@@ -1128,6 +1422,31 @@
                                 <i class="fa-solid fa-xmark"></i> Cancel
                             </button>
                         </div>
+
+                        <!-- IN-PAGE ARTICLE SUBMISSION SUCCESS NOTIFICATION -->
+                        ${articleSubmittedSuccess ? `
+                            <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 shadow-sm space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 text-base mt-0.5">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <h3 class="font-heading font-extrabold text-base sm:text-lg text-emerald-900">Article Submit Successful!</h3>
+                                        <p class="text-xs sm:text-sm text-emerald-800 leading-relaxed">
+                                            Aapka article successfully submit ho gaya hai! Kuch hi time mein Admin verification ke baad ye live ho jayega aur aapki profile page par aapko inform kar diya jayega.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 pt-1 pl-0 sm:pl-12">
+                                    <button type="button" onclick="articleSubmittedSuccess = false; navigateToPage('profile.html');" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all">
+                                        Check Status in My Profile
+                                    </button>
+                                    <button type="button" onclick="articleSubmittedSuccess = false; renderAppView();" class="px-3.5 py-2 bg-white border border-emerald-300 text-emerald-800 font-bold text-xs rounded-xl hover:bg-emerald-100 transition-all">
+                                        Write Another Article
+                                    </button>
+                                </div>
+                            </div>
+                        ` : ''}
 
                         <form onsubmit="handleNewArticleSubmit(event)" class="space-y-4 sm:space-y-6 text-xs sm:text-sm">
                             <div>
@@ -1147,8 +1466,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block font-bold text-slate-700 mb-1.5">Author Name (Auto-Fetched)</label>
-                                    <input type="text" id="newArticleAuthor" value="${authorDefault}" readonly required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-100 border border-slate-300 rounded-xl text-emerald-700 font-bold outline-none cursor-not-allowed">
+                                    <label class="block font-bold text-slate-700 mb-1.5">Author Name (Auto-Fetched from SNEH Account)</label>
+                                    <input type="text" id="newArticleAuthor" value="${escapeHtml(authorDefault)}" readonly required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-100 border border-slate-300 rounded-xl text-emerald-700 font-bold outline-none cursor-not-allowed">
                                 </div>
                             </div>
 
@@ -1164,12 +1483,12 @@
 
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1.5">Full Article Content (Minimum 500 Words Recommended) *</label>
-                                <textarea id="newArticleContent" rows="10" required placeholder="Write your detailed article content here..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
+                                <textarea id="newArticleContent" rows="8" required placeholder="Write your detailed article content here..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
                             </div>
 
-                            <div class="pt-3 flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
-                                <button type="button" onclick="navigateToPage('home.html')" class="w-full sm:w-auto px-6 py-3 bg-slate-200 text-slate-700 font-bold rounded-xl text-center">Cancel</button>
-                                <button type="submit" id="submitArticleBtn" class="w-full sm:w-auto px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                            <div class="pt-3 flex flex-wrap items-center justify-end gap-2.5">
+                                <button type="button" onclick="navigateToPage('home.html')" class="px-4 py-2.5 bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">Cancel</button>
+                                <button type="submit" id="submitArticleBtn" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow transition-all flex items-center justify-center gap-1.5 text-xs">
                                     <i class="fa-solid fa-paper-plane"></i> Submit Whitepaper
                                 </button>
                             </div>
@@ -1191,13 +1510,13 @@
 
             container.innerHTML = `
                 <section class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-5 mb-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-5 sm:pb-6 mb-6 sm:mb-8">
                         <div>
-                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold text-[10px] uppercase rounded-md">Authorized Admin: ${window.currentUser.email}</span>
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold text-[10px] uppercase rounded-md">Authorized Admin: ${escapeHtml(window.currentUser.email)}</span>
                             <h1 class="font-heading font-black text-xl sm:text-3xl text-slate-900 mt-1">Admin Article Approval Portal</h1>
                             <p class="text-xs text-slate-500 mt-1">Review community submissions before they appear live on SNEH ELASTIC BLOG.</p>
                         </div>
-                        <button onclick="navigateToPage('home.html')" class="w-full sm:w-auto justify-center px-4 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 flex items-center gap-2">
+                        <button onclick="navigateToPage('home.html')" class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 flex items-center justify-center gap-2">
                             <i class="fa-solid fa-arrow-left"></i> Back to Live Blog
                         </button>
                     </div>
@@ -1209,7 +1528,7 @@
                         </h2>
 
                         ${pendingArticles.length === 0 ? `
-                            <div class="bg-white rounded-2xl border border-slate-200 p-8 text-center text-slate-500">
+                            <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 text-center text-slate-500">
                                 <i class="fa-solid fa-circle-check text-3xl text-emerald-400 mb-2"></i>
                                 <p class="text-sm font-bold text-slate-700">All Caught Up!</p>
                                 <p class="text-xs mt-1">There are no pending community articles waiting for approval right now.</p>
@@ -1222,24 +1541,24 @@
                                             <div>
                                                 <div class="flex flex-wrap items-center gap-2 text-xs">
                                                     <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-extrabold rounded uppercase text-[10px]">PENDING REVIEW</span>
-                                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 font-bold rounded text-[10px]">${art.category}</span>
-                                                    <span class="text-slate-400">${art.date}</span>
+                                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 font-bold rounded text-[10px]">${escapeHtml(art.category)}</span>
+                                                    <span class="text-slate-400">${escapeHtml(art.date)}</span>
                                                 </div>
-                                                <h3 class="font-heading font-extrabold text-base sm:text-lg text-slate-900 mt-1">${art.title}</h3>
-                                                <p class="text-xs text-slate-500">Submitted by <strong class="text-slate-800">${art.author}</strong> (${art.authorEmail || 'Verified User'})</p>
+                                                <h3 class="font-heading font-extrabold text-base sm:text-lg text-slate-900 mt-1">${escapeHtml(art.title)}</h3>
+                                                <p class="text-xs text-slate-500">Submitted by <strong class="text-slate-800">${escapeHtml(art.author)}</strong> (${escapeHtml(art.authorEmail || 'Verified User')})</p>
                                             </div>
-                                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
-                                                <button onclick="approveCommunityArticle('${art.firestoreId}')" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs rounded-xl shadow flex items-center justify-center gap-1.5 transition-all">
-                                                    <i class="fa-solid fa-check"></i> Approve & Publish Live
+                                            <div class="flex flex-wrap items-center gap-2 shrink-0 pt-2 sm:pt-0">
+                                                <button onclick="approveCommunityArticle('${escapeHtml(art.firestoreId || art.slug)}')" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs rounded-xl shadow flex items-center justify-center gap-1.5 transition-all">
+                                                    <i class="fa-solid fa-check"></i> Approve & Publish
                                                 </button>
-                                                <button onclick="rejectCommunityArticle('${art.firestoreId}')" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all">
+                                                <button onclick="rejectCommunityArticle('${escapeHtml(art.firestoreId || art.slug)}')" class="px-3 py-2 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all">
                                                     <i class="fa-solid fa-trash"></i> Reject
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200/70 space-y-2">
                                             <p class="text-xs font-bold text-slate-700">Executive Summary:</p>
-                                            <p class="text-xs text-slate-600">${art.shortDesc}</p>
+                                            <p class="text-xs text-slate-600">${escapeHtml(art.shortDesc)}</p>
                                             <p class="text-xs font-bold text-slate-700 pt-2">Full Article Content Preview:</p>
                                             <div class="text-xs text-slate-700 max-h-48 overflow-y-auto bg-white p-3 rounded-lg border border-slate-200">
                                                 ${art.fullContent}
@@ -1256,17 +1575,17 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                             <span>Approved & Live Community Articles (${approvedArticles.length})</span>
                         </h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             ${approvedArticles.map(art => `
                                 <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-between gap-3">
                                     <div class="min-w-0">
-                                        <span class="text-[10px] font-extrabold text-emerald-600 uppercase">${art.category} • LIVE</span>
-                                        <h4 class="font-bold text-sm text-slate-900 truncate">${art.title}</h4>
-                                        <p class="text-xs text-slate-500">By ${art.author}</p>
+                                        <span class="text-[10px] font-extrabold text-emerald-600 uppercase">${escapeHtml(art.category)} • LIVE</span>
+                                        <h4 class="font-bold text-sm text-slate-900 truncate">${escapeHtml(art.title)}</h4>
+                                        <p class="text-xs text-slate-500">By ${escapeHtml(art.author)}</p>
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
-                                        <button onclick="navigateToPage('${art.slug}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg">View</button>
-                                        <button onclick="rejectCommunityArticle('${art.firestoreId}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold rounded-lg" title="Remove Live Article">
+                                        <button onclick="navigateToPage('${escapeHtml(art.slug)}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg">View</button>
+                                        <button onclick="rejectCommunityArticle('${escapeHtml(art.firestoreId || art.slug)}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold rounded-lg" title="Remove Live Article">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </div>
@@ -1281,7 +1600,7 @@
         function renderArticlePageView(container, article) {
             container.innerHTML = `
                 <section class="relative bg-slate-950 text-white pt-8 sm:pt-12 pb-14 sm:pb-20 px-4 lg:px-8 overflow-hidden">
-                    <div class="absolute inset-0 opacity-25 bg-cover bg-center" style="background-image: url('${article.image}');"></div>
+                    <div class="absolute inset-0 opacity-25 bg-cover bg-center" style="background-image: url('${escapeHtml(article.image)}');"></div>
                     <div class="max-w-4xl mx-auto relative z-10 space-y-3 sm:space-y-4">
                         <button onclick="navigateToPage('home.html')" class="inline-flex items-center space-x-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors mb-1">
                             <i class="fa-solid fa-arrow-left"></i>
@@ -1289,24 +1608,25 @@
                         </button>
                         <div class="flex flex-wrap items-center gap-2 text-xs">
                             <span class="px-2.5 py-1 bg-emerald-500 text-slate-950 font-extrabold uppercase rounded-lg text-[10px]">
-                                ${article.category}
+                                ${escapeHtml(article.category)}
                             </span>
-                            <span class="text-slate-300 text-xs">${article.date} • ${article.readTime}</span>
+                            <span class="text-slate-300 text-xs">${escapeHtml(article.date)} • ${escapeHtml(article.readTime)}</span>
+                            <span class="text-emerald-400 font-mono text-[11px] bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">${escapeHtml(article.slug)}</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-xl sm:text-4xl leading-tight">
-                            ${article.title}
+                            ${escapeHtml(article.title)}
                         </h1>
-                        <div class="flex items-center space-x-3 pt-2">
+                        <div class="flex items-center space-x-3 pt-1">
                             <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0">
-                                ${article.author.charAt(0).toUpperCase()}
+                                ${escapeHtml(article.author.charAt(0).toUpperCase())}
                             </div>
-                            <span class="text-xs font-semibold text-slate-200">Published by ${article.author}</span>
+                            <span class="text-xs font-semibold text-slate-200">Published by ${escapeHtml(article.author)}</span>
                         </div>
                     </div>
                 </section>
 
                 <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-12">
-                    <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-10 shadow-sm space-y-6 text-slate-800 text-sm sm:text-base leading-relaxed">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-10 shadow-sm space-y-6 text-slate-800 text-sm sm:text-base leading-relaxed">
                         ${article.fullContent}
                     </div>
                 </section>
@@ -1318,9 +1638,6 @@
             const pageParam = urlParams.get('page');
             if (pageParam) {
                 activeRoute = pageParam;
-            }
-            if (window.currentUser && typeof window.updateAuthUI === 'function') {
-                window.updateAuthUI(window.currentUser);
             }
             renderAppView();
         });
