@@ -1077,14 +1077,14 @@
             const summary = document.getElementById('newArticleSummary').value.trim();
             const imageUrl = document.getElementById('newArticleImage').value.trim() || "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=80";
             const content = document.getElementById('newArticleContent').value.trim();
-            const localId = 'local_' + Date.now();
+            const docId = 'art_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
             const slugId = 'community-' + Date.now() + '.html';
 
             const safeSummary = escapeHtml(summary);
             const safeContent = escapeHtml(content);
 
             const articlePayload = {
-                firestoreId: localId,
+                firestoreId: docId,
                 slug: slugId,
                 status: 'pending',
                 category: category,
@@ -1101,28 +1101,32 @@
                 createdAtMs: Date.now()
             };
 
+            let savedToFirebase = false;
+            try {
+                if (window.firestoreTools && window.firebaseDb) {
+                    const { doc, setDoc, serverTimestamp } = window.firestoreTools;
+                    const docRef = doc(window.firebaseDb, 'community_articles', docId);
+                    await setDoc(docRef, {
+                        ...articlePayload,
+                        createdAt: serverTimestamp()
+                    });
+                    savedToFirebase = true;
+                }
+            } catch (err) {
+                console.error("Firestore Write Error:", err);
+                showToast("Firebase DB Permission Alert: " + (err.message || "Check Firestore Rules"), true);
+            }
+
             window.communityArticles.unshift(articlePayload);
             try {
                 localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
             } catch (err) {}
 
-            try {
-                if (window.firestoreTools && window.communityArticlesCol) {
-                    const { addDoc, serverTimestamp } = window.firestoreTools;
-                    const docRef = await addDoc(window.communityArticlesCol, {
-                        ...articlePayload,
-                        createdAt: serverTimestamp()
-                    });
-                    articlePayload.firestoreId = docRef.id;
-                    try {
-                        localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
-                    } catch (err) {}
-                }
-            } catch (err) {}
-
             articleSubmittedSuccess = true;
             renderAppView();
-            showToast("Article Submitted Successfully!");
+            if (savedToFirebase) {
+                showToast("Article Submitted to Firebase Database Successfully!");
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
