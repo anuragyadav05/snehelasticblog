@@ -315,7 +315,9 @@
         }
 
         const articlesCollectionRef = collection(db, 'community_articles');
+        const publishedArticlesColRef = collection(db, 'articles');
         window.communityArticlesCol = articlesCollectionRef;
+        window.publishedArticlesCol = publishedArticlesColRef;
 
         syncCommunityArticlesState([]);
 
@@ -328,6 +330,16 @@
         }, () => {
             syncCommunityArticlesState([]);
         });
+
+        onSnapshot(publishedArticlesColRef, (snapshot) => {
+            const liveDocs = [];
+            snapshot.forEach((docSnap) => {
+                liveDocs.push({ firestoreId: docSnap.id, status: 'approved', ...docSnap.data() });
+            });
+            if (liveDocs.length > 0) {
+                syncCommunityArticlesState(liveDocs);
+            }
+        }, () => {});
 
         window.updateAuthUI = function(user) {
             const loggedOutNav = document.getElementById('loggedOutNav');
@@ -1003,26 +1015,69 @@
                 return;
             }
             const target = window.communityArticles.find(a => a.firestoreId === firestoreId || a.slug === firestoreId);
+            const approvedTimestamp = Date.now();
             if (target) {
                 target.status = 'approved';
                 target.approvedBy = window.currentUser.email;
-                target.approvedAtMs = Date.now();
+                target.approvedAtMs = approvedTimestamp;
                 try {
                     localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
                 } catch (e) {}
             }
             renderAppView();
-            showToast("Article Approved! It is now permanently LIVE on the website.");
 
             try {
                 if (window.firestoreTools && window.firebaseDb) {
-                    const { doc, setDoc } = window.firestoreTools;
-                    const artRef = doc(window.firebaseDb, 'community_articles', firestoreId);
-                    await setDoc(artRef, { 
-                        status: 'approved', 
-                        approvedBy: window.currentUser.email, 
-                        approvedAtMs: Date.now() 
+                    const { doc, setDoc, serverTimestamp } = window.firestoreTools;
+                    const cleanArticleData = target ? { ...target } : { firestoreId };
+                    delete cleanArticleData.createdAt;
+
+                    // 1. Save full approved article data to the 'articles' collection in Cloud Firestore
+                    const publishedArticleRef = doc(window.firebaseDb, 'articles', firestoreId);
+                    await setDoc(publishedArticleRef, {
+                        ...cleanArticleData,
+                        status: 'approved',
+                        approvedBy: window.currentUser.email,
+                        approvedAtMs: approvedTimestamp,
+                        publishedAt: serverTimestamp()
                     }, { merge: true });
+
+                    // 2. Update status in 'community_articles' queue
+                    const pendingRef = doc(window.firebaseDb, 'community_articles', firestoreId);
+                    await setDoc(pendingRef, {
+                        ...cleanArticleData,
+                        status: 'approved',
+                        approvedBy: window.currentUser.email,
+                        approvedAtMs: approvedTimestamp
+                    }, { merge: true });
+
+                    showToast("Approved & saved to Cloud Firestore 'articles' collection!");
+                } else {
+                    showToast("Article Approved locally (Firestore not initialized).", true);
+                }
+            } catch (e) {
+                console.error("Firestore Approve Save Error:", e);
+                showToast("Firestore Save Error: " + (e.message || "Check Firestore Security Rules for 'articles'"), true);
+            }
+        }
+
+        async function rejectCommunityArticle(firestoreId) {
+            if (!window.currentUser || !window.isAdminAuthenticated) {
+                showToast("Admin authorization required.", true);
+                return;
+            }
+            window.communityArticles = window.communityArticles.filter(a => a.firestoreId !== firestoreId && a.slug !== firestoreId);
+            try {
+                localStorage.setItem('sneh_community_articles_cache', JSON.stringify(window.communityArticles));
+            } catch (e) {}
+            renderAppView();
+            showToast("Article rejected and removed.");
+
+            try {
+                if (window.firestoreTools && window.firebaseDb) {
+                    const { doc, deleteDoc } = window.firestoreTools;
+                    await deleteDoc(doc(window.firebaseDb, 'community_articles', firestoreId));
+                    await deleteDoc(doc(window.firebaseDb, 'articles', firestoreId));
                 }
             } catch (e) {}
         }
@@ -1648,5 +1703,3 @@
     </script>
 </body>
 </html>
-
-
