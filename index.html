@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>SNEH ELASTIC BLOG - Industrial Textile Knowledge Hub</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,6 +42,21 @@
         }
     </script>
     <style>
+        html, body {
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            overscroll-behavior-x: none;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        input, select, textarea {
+            font-size: 16px !important; /* Prevents iOS auto-zoom on input focus */
+        }
+        @media (min-width: 640px) {
+            input, select, textarea {
+                font-size: 0.875rem !important;
+            }
+        }
         .gradient-text {
             background: linear-gradient(135deg, #0284c7 0%, #10b981 100%);
             -webkit-background-clip: text;
@@ -53,7 +68,7 @@
             background-size: 24px 24px;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
@@ -69,7 +84,7 @@
             <a href="javascript:void(0)" onclick="navigateToPage('home.html')" class="flex items-center space-x-2 sm:space-x-3 group shrink-0">
                 <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-8 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
                 <span class="font-heading font-black text-sm sm:text-xl text-slate-900 tracking-tight flex items-center gap-1">
-                    <span class="truncate max-w-[110px] sm:max-w-none">SNEH ELASTIC</span>
+                    <span class="truncate max-w-[105px] sm:max-w-none">SNEH ELASTIC</span>
                     <span class="text-emerald-600 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded-lg border border-emerald-200 text-[10px] sm:text-xs uppercase font-extrabold shrink-0">BLOG</span>
                 </span>
             </a>
@@ -82,7 +97,7 @@
                     <span class="hidden lg:inline">Search</span>
                 </button>
 
-                <!-- Admin Moderation Button (HIDDEN BY DEFAULT - ONLY anuragyadav1776@gmail.com) -->
+                <!-- Admin Moderation Button (ONLY FOR anuragyadav1776@gmail.com) -->
                 <button id="adminPortalBtn" onclick="openAdminGate()" class="hidden px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 font-bold text-xs transition-all items-center gap-1.5 relative" title="Admin Approval Dashboard">
                     <i class="fa-solid fa-shield-halved text-amber-600"></i>
                     <span class="hidden md:inline">Admin Portal</span>
@@ -104,19 +119,20 @@
                     </button>
                 </div>
 
-                <!-- Logged In State (ALWAYS DISPLAYS USER NAME & AVATAR) -->
-                <div id="loggedInNav" class="hidden items-center space-x-2">
-                    <button onclick="navigateToPage('profile.html')" class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200">
-                        <div class="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0" id="userAvatarText">
-                            SE
+                <!-- Logged In State: MOBILE SHOWS ONLY PROFILE ICON, DESKTOP SHOWS NAME + AVATAR -->
+                <div id="loggedInNav" class="hidden items-center">
+                    <button onclick="navigateToPage('profile.html')" class="flex items-center space-x-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200" title="My Profile">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500 text-slate-950 font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0">
+                            <i class="fa-solid fa-user text-xs sm:hidden"></i>
+                            <span id="userAvatarText" class="hidden sm:inline">SE</span>
                         </div>
-                        <div class="text-left pr-1">
-                            <div class="text-xs font-extrabold text-slate-900 leading-tight max-w-[110px] sm:max-w-[160px] truncate" id="navUserName">User</div>
-                            <div class="text-[9px] text-emerald-600 font-bold leading-none hidden sm:flex items-center gap-1">
+                        <div class="text-left pr-1 hidden sm:block">
+                            <div class="text-xs font-extrabold text-slate-900 leading-tight max-w-[150px] truncate" id="navUserName">User</div>
+                            <div class="text-[9px] text-emerald-600 font-bold leading-none flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Active
                             </div>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-500 text-[10px]"></i>
+                        <i class="fa-solid fa-chevron-right text-slate-500 text-[10px] hidden sm:inline"></i>
                     </button>
                 </div>
             </div>
@@ -125,12 +141,12 @@
     </header>
 
     <!-- NOTIFICATION TOAST -->
-    <div id="toastBanner" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-medium">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <div id="toastBanner" class="fixed bottom-5 right-4 left-4 sm:left-auto sm:right-5 z-50 hidden sm:max-w-sm bg-slate-900 text-white px-4 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 text-xs font-medium">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base shrink-0"></i>
         <span id="toastMessage">Notification message</span>
     </div>
 
-    <!-- DYNAMIC ROUTER CONTAINER (DIFFERENT URL PER PAGE VIA ?page=...) -->
+    <!-- DYNAMIC ROUTER CONTAINER -->
     <main id="appRouterContainer" class="flex-grow pb-12">
         <!-- Views rendered dynamically -->
     </main>
@@ -140,7 +156,7 @@
         <div class="container mx-auto px-4 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
                 <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-7 w-auto object-contain brightness-200">
-                <span class="font-heading font-bold text-white">SNEH ELASTIC THREADS PVT. LTD.</span>
+                <span class="font-heading font-bold text-white text-xs sm:text-sm">SNEH ELASTIC THREADS PVT. LTD.</span>
             </div>
             <p class="text-center sm:text-right text-[11px] text-slate-400">
                 &copy; 2026 Sneh Elastic Threads Private Limited. All Rights Reserved.
@@ -148,37 +164,35 @@
         </div>
     </footer>
 
-    <!-- SIGN IN ONLY MODAL (CREATING ACCOUNT REDIRECTS TO account.snehelastic.com) -->
+    <!-- SIGN IN ONLY MODAL -->
     <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-3 sm:p-4">
-        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-6 sm:p-8 relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-5 sm:p-8 relative">
+            <button onclick="closeAuthModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="text-center mb-6">
-                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-12 w-auto mx-auto mb-3 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
-                <h2 class="font-heading font-extrabold text-xl text-slate-900">Sign In to SNEH ELASTIC BLOG</h2>
+            <div class="text-center mb-5">
+                <img src="https://i.ibb.co/hF7VKhwc/SNEH-ELASTIC-LOGO.png" alt="Sneh Elastic Logo" class="h-11 w-auto mx-auto mb-3 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/160x40/07162c/ffffff?text=SNEH+ELASTIC';">
+                <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900">Sign In to SNEH ELASTIC BLOG</h2>
                 <p class="text-xs text-slate-500 mt-1">Enter your Sneh Elastic Account credentials</p>
             </div>
 
             <div id="authErrorMessage" class="hidden mb-4 p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-600 font-medium text-center"></div>
 
-            <!-- LOGIN FORM ONLY -->
             <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
-                    <input type="email" id="loginEmail" required placeholder="yourname@example.com" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500">
+                    <input type="email" id="loginEmail" required placeholder="yourname@example.com" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-right-to-bracket"></i> Sign In
                 </button>
             </form>
 
-            <!-- REDIRECT TO account.snehelastic.com FOR ACCOUNT CREATION -->
             <div class="mt-6 pt-5 border-t border-slate-100 text-center space-y-2">
                 <p class="text-xs text-slate-500">Don't have a SNEH ELASTIC Account yet?</p>
                 <a href="https://account.snehelastic.com" target="_blank" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition-all inline-flex items-center justify-center gap-2 shadow-sm">
@@ -201,7 +215,7 @@
             <h3 class="font-heading font-extrabold text-lg text-slate-900">Admin Portal Verification</h3>
             <p class="text-xs text-slate-500 mt-1 mb-4">Enter Admin Security Password to manage and approve pending article requests.</p>
             <form onsubmit="verifyAdminPin(event)" class="space-y-3">
-                <input type="password" id="adminPinInput" required placeholder="Enter Admin Password" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-center text-sm font-bold tracking-widest outline-none focus:ring-2 focus:ring-amber-500">
+                <input type="password" id="adminPinInput" required placeholder="Enter Admin Password" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold tracking-widest outline-none focus:ring-2 focus:ring-amber-500">
                 <p id="adminPinError" class="hidden text-xs text-rose-600 font-semibold">Incorrect Admin Password!</p>
                 <button type="submit" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow transition-all">
                     Access Admin Portal
@@ -215,8 +229,8 @@
         <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-3 sm:p-4 relative overflow-hidden max-h-[85vh] flex flex-col">
             <div class="relative flex items-center mb-3 gap-2">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 text-sm"></i>
-                <input type="text" id="modalSearchInput" oninput="handleSearchInput(this.value)" placeholder="Search live articles by keyword, polymer, or author..." 
-                    class="w-full pl-10 pr-3 py-2.5 bg-slate-100 rounded-xl text-xs sm:text-sm font-medium text-slate-900 border-0 focus:ring-2 focus:ring-emerald-500 outline-none">
+                <input type="text" id="modalSearchInput" oninput="handleSearchInput(this.value)" placeholder="Search live articles..." 
+                    class="w-full pl-10 pr-3 py-2.5 bg-slate-100 rounded-xl font-medium text-slate-900 border-0 focus:ring-2 focus:ring-emerald-500 outline-none">
                 <button onclick="toggleQuickSearchModal()" class="px-3 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0">
                     <i class="fa-solid fa-circle-xmark"></i>
                     <span>Close</span>
@@ -225,6 +239,27 @@
             <div id="searchResultsList" class="flex-grow overflow-y-auto space-y-2 pr-1 divide-y divide-slate-100"></div>
         </div>
     </div>
+
+    <!-- INSTANT SYNCHRONOUS SESSION RESTORATION BEFORE MODULE LOADS -->
+    <script>
+        (function restoreCachedSessionImmediately() {
+            try {
+                const cachedRaw = localStorage.getItem('sneh_persistent_user');
+                if (cachedRaw) {
+                    const parsed = JSON.parse(cachedRaw);
+                    if (parsed && parsed.email) {
+                        window.currentUser = parsed;
+                        // Immediately update header UI on initial parse before any flicker
+                        window.addEventListener('DOMContentLoaded', () => {
+                            if (typeof window.updateAuthUI === 'function') {
+                                window.updateAuthUI(window.currentUser);
+                            }
+                        });
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
 
     <!-- FIREBASE AUTH & FIRESTORE PERSISTENT REAL-TIME ENGINE -->
     <script type="module">
@@ -264,23 +299,25 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // BULLETPROOF PERSISTENT SESSION ACROSS REFRESHES
-        setPersistence(auth, browserLocalPersistence).then(() => {
-            console.debug("Firebase Auth persistence set to LOCAL successfully.");
-        }).catch((err) => {
-            console.warn("Auth persistence error:", err);
-        });
+        setPersistence(auth, browserLocalPersistence).catch(() => {});
 
         window.firebaseAuth = auth;
         window.firebaseDb = db;
         window.firebaseSignIn = async (authObj, email, pass) => {
             const cred = await signInWithEmailAndPassword(authObj, email, pass);
-            localStorage.setItem('sneh_logged_in_email', email);
+            const safeUserObj = {
+                uid: cred.user.uid,
+                email: cred.user.email,
+                displayName: cred.user.displayName || cred.user.email.split('@')[0]
+            };
+            localStorage.setItem('sneh_persistent_user', JSON.stringify(safeUserObj));
+            window.currentUser = safeUserObj;
             return cred;
         };
         window.firebaseSignOut = async (authObj) => {
-            localStorage.removeItem('sneh_logged_in_email');
-            return await signOut(authObj);
+            localStorage.removeItem('sneh_persistent_user');
+            window.currentUser = null;
+            try { await signOut(authObj); } catch (e) {}
         };
         window.firestoreTools = { collection, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, serverTimestamp };
         window.blogAppId = appId;
@@ -312,28 +349,36 @@
             if (typeof renderAppView === 'function') {
                 renderAppView();
             }
-        }, (err) => {
-            console.warn("Firestore sync notice:", err.message);
         });
 
-        onAuthStateChanged(auth, async (user) => {
-            window.currentUser = user || null;
-            window.userProfileData = null;
+        onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                const safeUserObj = {
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0]
+                };
+                localStorage.setItem('sneh_persistent_user', JSON.stringify(safeUserObj));
+                window.currentUser = safeUserObj;
 
-            if (user) {
-                localStorage.setItem('sneh_logged_in_email', user.email);
                 try {
-                    const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'details');
+                    const userDocRef = doc(db, 'artifacts', appId, 'users', firebaseUser.uid, 'profile', 'details');
                     const snap = await getDoc(userDocRef);
                     if (snap.exists()) {
                         window.userProfileData = snap.data();
                     }
                 } catch (e) {}
             } else {
-                // If local storage has an active email but auth is restoring, prevent premature flicker
-                const cachedEmail = localStorage.getItem('sneh_logged_in_email');
-                if (cachedEmail && !window.currentUser) {
-                    // Keep waiting for auth initialization
+                // Only stay logged out if there is no explicit persistent session saved in localStorage
+                const cachedRaw = localStorage.getItem('sneh_persistent_user');
+                if (cachedRaw) {
+                    try {
+                        window.currentUser = JSON.parse(cachedRaw);
+                    } catch (e) {
+                        window.currentUser = null;
+                    }
+                } else {
+                    window.currentUser = null;
                 }
             }
 
@@ -347,7 +392,7 @@
             const userAvatarText = document.getElementById('userAvatarText');
             const navUserName = document.getElementById('navUserName');
 
-            if (user) {
+            if (user && user.email) {
                 const rawName = (window.userProfileData && window.userProfileData.fullName) || user.displayName || user.email.split('@')[0];
                 const displayName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
                 const initials = displayName.substring(0, 2).toUpperCase();
@@ -361,7 +406,7 @@
                 if (navUserName) navUserName.innerText = displayName;
 
                 if (adminPortalBtn) {
-                    if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                         adminPortalBtn.classList.remove('hidden');
                         adminPortalBtn.classList.add('flex');
                     } else {
@@ -387,6 +432,11 @@
                 renderAppView();
             }
         };
+
+        // Call immediately on script evaluation if cached user exists
+        if (window.currentUser) {
+            window.updateAuthUI(window.currentUser);
+        }
     </script>
 
     <!-- MAIN APPLICATION LOGIC & MULTI-PAGE ROUTING ENGINE -->
@@ -423,7 +473,6 @@
             `;
         }
 
-        // 20 OFFICIAL TECHNICAL ARTICLES
         const OFFICIAL_ARTICLES = [
             {
                 id: 1,
@@ -538,9 +587,9 @@
             const text = document.getElementById('toastMessage');
             if (!toast) return;
             text.innerText = msg;
-            icon.className = isError ? "fa-solid fa-circle-exclamation text-rose-400 text-base" : "fa-solid fa-circle-check text-emerald-400 text-base";
+            icon.className = isError ? "fa-solid fa-circle-exclamation text-rose-400 text-base shrink-0" : "fa-solid fa-circle-check text-emerald-400 text-base shrink-0";
             toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 4500);
+            setTimeout(() => toast.classList.add('hidden'), 5000);
         }
 
         function openAuthModal() {
@@ -575,8 +624,7 @@
 
             try {
                 const userCred = await window.firebaseSignIn(window.firebaseAuth, email, password);
-                window.currentUser = userCred.user;
-                window.updateAuthUI(userCred.user);
+                window.updateAuthUI(window.currentUser);
                 closeAuthModal();
                 showToast("Welcome back, " + (userCred.user.displayName || email.split('@')[0]) + "!");
             } catch (err) {
@@ -593,18 +641,16 @@
         }
 
         async function handleLogout() {
-            try {
-                await window.firebaseSignOut(window.firebaseAuth);
-                if (activeRoute === 'profile.html' || activeRoute === 'admin.html') {
-                    navigateToPage('home.html');
-                } else {
-                    renderAppView();
-                }
-                showToast("Signed out successfully.");
-            } catch (e) {}
+            await window.firebaseSignOut(window.firebaseAuth);
+            window.updateAuthUI(null);
+            if (activeRoute === 'profile.html' || activeRoute === 'admin.html') {
+                navigateToPage('home.html');
+            } else {
+                renderAppView();
+            }
+            showToast("Signed out successfully.");
         }
 
-        // Admin Gate & Approval Actions (RESTRICTED TO anuragyadav1776@gmail.com + PIN 9868)
         function openAdminGate() {
             if (!window.currentUser || window.currentUser.email.toLowerCase() !== "anuragyadav1776@gmail.com") {
                 showToast("Access Denied: Authorized Admin account required.", true);
@@ -668,7 +714,6 @@
                 renderAppView();
                 showToast("Article Approved! It is now permanently LIVE on the website.");
             } catch (e) {
-                console.error("Approval error:", e);
                 showToast("Error approving article: " + e.message, true);
             }
         }
@@ -687,7 +732,6 @@
                 renderAppView();
                 showToast("Article rejected and removed.");
             } catch (e) {
-                console.error("Delete error:", e);
                 showToast("Error removing article: " + e.message, true);
             }
         }
@@ -709,6 +753,9 @@
             }
 
             const btn = document.getElementById('submitArticleBtn');
+            const formEl = document.getElementById('writeArticleFormContainer');
+            const successBox = document.getElementById('submissionSuccessBanner');
+
             if (btn) {
                 btn.disabled = true;
                 btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
@@ -730,7 +777,7 @@
                     category: category,
                     title: title,
                     shortDesc: summary,
-                    fullContent: `<div class="space-y-4"><p class="text-lg text-slate-800 font-medium">${summary}</p><div class="pt-4 text-sm sm:text-base leading-relaxed whitespace-pre-line">${content}</div></div>`,
+                    fullContent: `<div class="space-y-4"><p class="text-base sm:text-lg text-slate-800 font-medium">${summary}</p><div class="pt-4 text-sm sm:text-base leading-relaxed whitespace-pre-line">${content}</div></div>`,
                     image: imageUrl,
                     author: author,
                     authorUid: window.currentUser.uid,
@@ -742,8 +789,13 @@
                     createdAt: serverTimestamp()
                 });
 
-                showToast("Aapka article successfully submit ho gaya hai! Kuch hi time mein admin approval ke baad ye live ho jayega aur aapki profile par show hoga.");
-                navigateToPage('profile.html');
+                // Show dedicated in-page Submit Successful Notification Banner
+                if (formEl) formEl.classList.add('hidden');
+                if (successBox) {
+                    successBox.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                showToast("Submit Successful! Your article has been sent for Admin approval.");
             } catch (err) {
                 showToast("Submission failed: " + err.message, true);
                 if (btn) {
@@ -797,7 +849,6 @@
             `).join('');
         }
 
-        // TRUE MULTI-PAGE ROUTER WITH DIFFERENT URLS (?page=...)
         function navigateToPage(pageSlug) {
             activeRoute = pageSlug;
             renderAppView();
@@ -846,23 +897,23 @@
             });
 
             container.innerHTML = `
-                <section class="hero-pattern text-white pt-10 sm:pt-14 pb-20 sm:pb-24 px-4 lg:px-8 relative overflow-hidden">
+                <section class="hero-pattern text-white pt-8 sm:pt-14 pb-16 sm:pb-24 px-4 lg:px-8 relative overflow-hidden">
                     <div class="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 relative z-10">
                         <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
-                            SNEH ELASTIC THREADS PRIVATE LIMITED • KNOWLEDGE HUB
+                            SNEH ELASTIC THREADS PVT. LTD. • KNOWLEDGE HUB
                         </span>
                         <h1 class="font-heading font-black text-2xl sm:text-5xl tracking-tight leading-tight">
                             Industrial Textile & <span class="gradient-text">Elastomer Engineering</span>
                         </h1>
-                        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-light leading-relaxed px-2">
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-light leading-relaxed px-1">
                             Explore peer-reviewed technical whitepapers on spandex extrusion, vulcanized rubber threads, mercerized cotton, and high-speed loom engineering.
                         </p>
-                        <div class="pt-2 flex flex-wrap justify-center gap-2.5">
-                            <button onclick="openWriteArticleModal()" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2">
+                        <div class="pt-2 flex flex-col sm:flex-row justify-center gap-2.5 px-2">
+                            <button onclick="openWriteArticleModal()" class="w-full sm:w-auto justify-center px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2">
                                 <i class="fa-solid fa-pen-nib"></i> Write & Submit an Article
                             </button>
                             ${!window.currentUser ? `
-                                <a href="https://account.snehelastic.com" target="_blank" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs rounded-xl transition-all flex items-center gap-2">
+                                <a href="https://account.snehelastic.com" target="_blank" class="w-full sm:w-auto justify-center px-5 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs rounded-xl transition-all flex items-center gap-2">
                                     <i class="fa-solid fa-user-plus text-emerald-400"></i> Create Sneh Elastic Account
                                 </a>
                             ` : ''}
@@ -870,21 +921,21 @@
                     </div>
                 </section>
 
-                <div class="max-w-3xl mx-auto px-4 -mt-8 sm:-mt-10 relative z-20">
+                <div class="max-w-3xl mx-auto px-3 sm:px-4 -mt-7 sm:-mt-10 relative z-20">
                     <div class="glass-card rounded-2xl p-1.5 sm:p-2 shadow-2xl flex items-center border border-slate-200">
-                        <div class="pl-3 pr-2 text-slate-400">
+                        <div class="pl-2.5 pr-1.5 text-slate-400">
                             <i class="fa-solid fa-magnifying-glass text-base sm:text-lg text-emerald-600"></i>
                         </div>
-                        <input type="text" value="${searchQuery}" oninput="searchQuery = this.value.toLowerCase(); renderAppView();" placeholder="Search live articles by title, polymer, or author..." class="w-full py-2.5 sm:py-3 px-1 sm:px-2 text-xs sm:text-sm font-medium text-slate-900 placeholder-slate-400 bg-transparent outline-none">
+                        <input type="text" value="${searchQuery}" oninput="searchQuery = this.value.toLowerCase(); renderAppView();" placeholder="Search articles..." class="w-full py-2 sm:py-3 px-1.5 text-slate-900 placeholder-slate-400 bg-transparent outline-none">
                         <button onclick="toggleQuickSearchModal()" class="px-3.5 sm:px-5 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all shrink-0 flex items-center gap-1.5">
                             <i class="fa-solid fa-sliders"></i>
-                            <span class="hidden xs:inline">Filter</span>
+                            <span class="hidden sm:inline">Filter</span>
                         </button>
                     </div>
                 </div>
 
-                <section class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 pt-8 sm:pt-10 pb-6">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-200 pb-3 sm:pb-4 mb-6 gap-3">
+                <section class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 pt-6 sm:pt-10 pb-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-200 pb-3 sm:pb-4 mb-5 gap-3">
                         <div class="flex items-center space-x-2 overflow-x-auto py-1 w-full sm:w-auto">
                             ${['All', 'Spandex', 'Rubber', 'Cotton', 'Machinery', 'Smart Textiles'].map(cat => `
                                 <button onclick="activeCategoryFilter = '${cat}'; renderAppView();" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategoryFilter === cat ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}">
@@ -933,7 +984,6 @@
             `;
         }
 
-        // DEDICATED PROFILE PAGE (profile.html)
         function renderProfilePageView(container) {
             if (!window.currentUser) {
                 navigateToPage('home.html');
@@ -947,33 +997,33 @@
             const myArts = (window.communityArticles || []).filter(a => a.authorUid === user.uid);
 
             container.innerHTML = `
-                <section class="max-w-4xl mx-auto px-4 lg:px-8 py-10">
-                    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-10 space-y-8">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-6 gap-4">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-500 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg">
+                <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-5 sm:p-10 space-y-6 sm:space-y-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-5 gap-4">
+                            <div class="flex items-center space-x-3.5">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-500 text-white font-extrabold text-xl sm:text-2xl flex items-center justify-center shadow-lg shrink-0">
                                     ${initials}
                                 </div>
                                 <div>
-                                    <h1 class="font-heading font-extrabold text-2xl text-slate-900">${displayName}</h1>
+                                    <h1 class="font-heading font-extrabold text-xl sm:text-2xl text-slate-900">${displayName}</h1>
                                     <p class="text-xs text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
                                         <i class="fa-solid fa-circle-check"></i> Verified Sneh Elastic Member
                                     </p>
                                 </div>
                             </div>
-                            <button onclick="handleLogout()" class="px-4 py-2.5 bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-bold rounded-xl transition-colors">
+                            <button onclick="handleLogout()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-bold rounded-xl transition-colors text-center">
                                 <i class="fa-solid fa-right-from-bracket"></i> Sign Out
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
                             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
                                 <span class="text-slate-400 block">Email Address</span>
-                                <span class="font-bold text-slate-800 text-sm">${user.email}</span>
+                                <span class="font-bold text-slate-800 text-sm break-all">${user.email}</span>
                             </div>
                             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1">
                                 <span class="text-slate-400 block">Account UID</span>
-                                <span class="font-mono text-xs text-slate-700">${user.uid}</span>
+                                <span class="font-mono text-xs text-slate-700 break-all">${user.uid}</span>
                             </div>
                         </div>
 
@@ -983,9 +1033,8 @@
                             </p>
                         </div>
 
-                        <!-- My Submitted Articles Section -->
                         <div class="space-y-4">
-                            <div class="flex items-center justify-between">
+                            <div class="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2">
                                 <h3 class="font-heading font-extrabold text-base text-slate-900">My Submitted Articles</h3>
                                 <button onclick="openWriteArticleModal()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl flex items-center gap-1.5">
                                     <i class="fa-solid fa-plus"></i> Write New Article
@@ -993,7 +1042,7 @@
                             </div>
 
                             ${myArts.length === 0 ? `
-                                <div class="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs">
+                                <div class="p-6 sm:p-8 text-center bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs">
                                     You have not published any community articles yet. Click "Write New Article" to get started!
                                 </div>
                             ` : `
@@ -1008,10 +1057,10 @@
                                                 </div>
                                                 <h4 class="font-bold text-sm text-slate-900">${art.title}</h4>
                                             </div>
-                                            <div class="flex items-center gap-3 shrink-0">
+                                            <div class="flex items-center gap-2 shrink-0">
                                                 ${art.status === 'approved' 
-                                                    ? `<span class="px-3 py-1 bg-emerald-100 text-emerald-700 font-extrabold rounded-lg text-xs">LIVE APPROVED</span>`
-                                                    : `<span class="px-3 py-1 bg-amber-100 text-amber-800 font-extrabold rounded-lg text-xs">PENDING ADMIN APPROVAL</span>`
+                                                    ? `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 font-extrabold rounded-lg text-[11px]">LIVE APPROVED</span>`
+                                                    : `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold rounded-lg text-[11px]">PENDING APPROVAL</span>`
                                                 }
                                                 ${art.status === 'approved' ? `<button onclick="navigateToPage('${art.slug}')" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-lg">View</button>` : ''}
                                             </div>
@@ -1032,8 +1081,38 @@
 
             container.innerHTML = `
                 <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
-                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-4 sm:p-10">
-                        <div class="flex flex-col xs:flex-row items-start xs:items-center justify-between border-b border-slate-100 pb-4 sm:pb-6 mb-6 gap-3">
+                    <!-- IN-PAGE SUBMISSION SUCCESS NOTIFICATION BANNER -->
+                    <div id="submissionSuccessBanner" class="hidden bg-white rounded-2xl sm:rounded-3xl shadow-xl border-2 border-emerald-500 p-6 sm:p-10 text-center space-y-5">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto shadow-sm">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="space-y-2 max-w-lg mx-auto">
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 font-extrabold text-[11px] uppercase rounded-full border border-emerald-200">
+                                Submission Successful
+                            </span>
+                            <h2 class="font-heading font-black text-xl sm:text-3xl text-slate-900">
+                                Aapka Article Submit Ho Gaya Hai!
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Thank you for contributing to <strong>SNEH ELASTIC BLOG</strong>. Aapka article successfully database mein save ho gaya hai. Kuch hi time mein Admin verification ke baad ye website par live publish ho jayega, aur aapki Profile page par aapko iska live status dikh jayega.
+                            </p>
+                        </div>
+                        <div class="pt-3 flex flex-col sm:flex-row justify-center gap-3">
+                            <button onclick="navigateToPage('profile.html')" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-user"></i> View Status in My Profile
+                            </button>
+                            <button onclick="navigateToPage('write-article.html')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-all">
+                                Write Another Article
+                            </button>
+                            <button onclick="navigateToPage('home.html')" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all">
+                                Back to Home
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ARTICLE SUBMISSION FORM -->
+                    <div id="writeArticleFormContainer" class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 p-4 sm:p-10">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-4 sm:pb-6 mb-5 gap-3">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
                                     <i class="fa-solid fa-pen-nib"></i>
@@ -1053,13 +1132,13 @@
                         <form onsubmit="handleNewArticleSubmit(event)" class="space-y-4 sm:space-y-6 text-xs sm:text-sm">
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1.5">Article Title *</label>
-                                <input type="text" id="newArticleTitle" required placeholder="e.g. Modern Testing Standards for High-Tenacity Elastic Webbing" class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                                <input type="text" id="newArticleTitle" required placeholder="e.g. Modern Testing Standards for High-Tenacity Elastic Webbing" class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
                                     <label class="block font-bold text-slate-700 mb-1.5">Category *</label>
-                                    <select id="newArticleCategory" required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                                    <select id="newArticleCategory" required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
                                         <option value="Spandex">Spandex</option>
                                         <option value="Rubber">Rubber</option>
                                         <option value="Cotton">Cotton</option>
@@ -1068,29 +1147,29 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block font-bold text-slate-700 mb-1.5">Author Name (Auto-Fetched from SNEH Account)</label>
-                                    <input type="text" id="newArticleAuthor" value="${authorDefault}" readonly required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-100 border border-slate-300 rounded-xl text-xs sm:text-sm text-emerald-700 font-bold outline-none cursor-not-allowed">
+                                    <label class="block font-bold text-slate-700 mb-1.5">Author Name (Auto-Fetched)</label>
+                                    <input type="text" id="newArticleAuthor" value="${authorDefault}" readonly required class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-100 border border-slate-300 rounded-xl text-emerald-700 font-bold outline-none cursor-not-allowed">
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1.5">Cover Image URL (Optional)</label>
-                                <input type="url" id="newArticleImage" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                                <input type="url" id="newArticleImage" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
                             </div>
 
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1.5">Short Summary *</label>
-                                <textarea id="newArticleSummary" rows="2" required placeholder="Write a brief overview of your article..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
+                                <textarea id="newArticleSummary" rows="2" required placeholder="Write a brief overview of your article..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
                             </div>
 
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1.5">Full Article Content (Minimum 500 Words Recommended) *</label>
-                                <textarea id="newArticleContent" rows="10" required placeholder="Write your detailed article content here..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
+                                <textarea id="newArticleContent" rows="10" required placeholder="Write your detailed article content here..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 font-medium"></textarea>
                             </div>
 
-                            <div class="pt-4 flex flex-col-reverse xs:flex-row items-center justify-end gap-3">
-                                <button type="button" onclick="navigateToPage('home.html')" class="w-full xs:w-auto px-6 py-3 bg-slate-200 text-slate-700 font-bold rounded-xl text-center">Cancel</button>
-                                <button type="submit" id="submitArticleBtn" class="w-full xs:w-auto px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                            <div class="pt-3 flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+                                <button type="button" onclick="navigateToPage('home.html')" class="w-full sm:w-auto px-6 py-3 bg-slate-200 text-slate-700 font-bold rounded-xl text-center">Cancel</button>
+                                <button type="submit" id="submitArticleBtn" class="w-full sm:w-auto px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                                     <i class="fa-solid fa-paper-plane"></i> Submit Whitepaper
                                 </button>
                             </div>
@@ -1111,20 +1190,20 @@
             const approvedArticles = allCommunity.filter(a => a.status === 'approved');
 
             container.innerHTML = `
-                <section class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-10">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
+                <section class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-10">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-5 mb-6">
                         <div>
                             <span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold text-[10px] uppercase rounded-md">Authorized Admin: ${window.currentUser.email}</span>
-                            <h1 class="font-heading font-black text-2xl sm:text-3xl text-slate-900 mt-1">Admin Article Approval Portal</h1>
+                            <h1 class="font-heading font-black text-xl sm:text-3xl text-slate-900 mt-1">Admin Article Approval Portal</h1>
                             <p class="text-xs text-slate-500 mt-1">Review community submissions before they appear live on SNEH ELASTIC BLOG.</p>
                         </div>
-                        <button onclick="navigateToPage('home.html')" class="px-4 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 flex items-center gap-2">
+                        <button onclick="navigateToPage('home.html')" class="w-full sm:w-auto justify-center px-4 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-arrow-left"></i> Back to Live Blog
                         </button>
                     </div>
 
-                    <div class="mb-12">
-                        <h2 class="font-heading font-extrabold text-lg text-slate-900 mb-4 flex items-center gap-2">
+                    <div class="mb-10">
+                        <h2 class="font-heading font-extrabold text-base sm:text-lg text-slate-900 mb-4 flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                             <span>Pending Approval Queue (${pendingArticles.length})</span>
                         </h2>
@@ -1138,27 +1217,27 @@
                         ` : `
                             <div class="space-y-4">
                                 ${pendingArticles.map(art => `
-                                    <div class="bg-white rounded-2xl border-2 border-amber-300 shadow-md p-5 sm:p-6 space-y-4">
-                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                                    <div class="bg-white rounded-2xl border-2 border-amber-300 shadow-md p-4 sm:p-6 space-y-4">
+                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
                                             <div>
-                                                <div class="flex items-center gap-2 text-xs">
+                                                <div class="flex flex-wrap items-center gap-2 text-xs">
                                                     <span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-extrabold rounded uppercase text-[10px]">PENDING REVIEW</span>
                                                     <span class="px-2 py-0.5 bg-slate-100 text-slate-700 font-bold rounded text-[10px]">${art.category}</span>
                                                     <span class="text-slate-400">${art.date}</span>
                                                 </div>
-                                                <h3 class="font-heading font-extrabold text-lg text-slate-900 mt-1">${art.title}</h3>
+                                                <h3 class="font-heading font-extrabold text-base sm:text-lg text-slate-900 mt-1">${art.title}</h3>
                                                 <p class="text-xs text-slate-500">Submitted by <strong class="text-slate-800">${art.author}</strong> (${art.authorEmail || 'Verified User'})</p>
                                             </div>
-                                            <div class="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
-                                                <button onclick="approveCommunityArticle('${art.firestoreId}')" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs rounded-xl shadow flex items-center gap-1.5 transition-all">
+                                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
+                                                <button onclick="approveCommunityArticle('${art.firestoreId}')" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs rounded-xl shadow flex items-center justify-center gap-1.5 transition-all">
                                                     <i class="fa-solid fa-check"></i> Approve & Publish Live
                                                 </button>
-                                                <button onclick="rejectCommunityArticle('${art.firestoreId}')" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all">
+                                                <button onclick="rejectCommunityArticle('${art.firestoreId}')" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all">
                                                     <i class="fa-solid fa-trash"></i> Reject
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70 space-y-2">
+                                        <div class="bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200/70 space-y-2">
                                             <p class="text-xs font-bold text-slate-700">Executive Summary:</p>
                                             <p class="text-xs text-slate-600">${art.shortDesc}</p>
                                             <p class="text-xs font-bold text-slate-700 pt-2">Full Article Content Preview:</p>
@@ -1173,11 +1252,11 @@
                     </div>
 
                     <div>
-                        <h2 class="font-heading font-extrabold text-lg text-slate-900 mb-4 flex items-center gap-2">
+                        <h2 class="font-heading font-extrabold text-base sm:text-lg text-slate-900 mb-4 flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                             <span>Approved & Live Community Articles (${approvedArticles.length})</span>
                         </h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             ${approvedArticles.map(art => `
                                 <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-between gap-3">
                                     <div class="min-w-0">
@@ -1201,10 +1280,10 @@
 
         function renderArticlePageView(container, article) {
             container.innerHTML = `
-                <section class="relative bg-slate-950 text-white pt-10 sm:pt-12 pb-16 sm:pb-20 px-4 lg:px-8 overflow-hidden">
+                <section class="relative bg-slate-950 text-white pt-8 sm:pt-12 pb-14 sm:pb-20 px-4 lg:px-8 overflow-hidden">
                     <div class="absolute inset-0 opacity-25 bg-cover bg-center" style="background-image: url('${article.image}');"></div>
                     <div class="max-w-4xl mx-auto relative z-10 space-y-3 sm:space-y-4">
-                        <button onclick="navigateToPage('home.html')" class="inline-flex items-center space-x-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors mb-2">
+                        <button onclick="navigateToPage('home.html')" class="inline-flex items-center space-x-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors mb-1">
                             <i class="fa-solid fa-arrow-left"></i>
                             <span>Back to All Articles</span>
                         </button>
@@ -1213,13 +1292,12 @@
                                 ${article.category}
                             </span>
                             <span class="text-slate-300 text-xs">${article.date} • ${article.readTime}</span>
-                            <span class="text-emerald-400 font-mono text-[11px] bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">${article.slug}</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-xl sm:text-4xl leading-tight">
                             ${article.title}
                         </h1>
                         <div class="flex items-center space-x-3 pt-2">
-                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-xs">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0">
                                 ${article.author.charAt(0).toUpperCase()}
                             </div>
                             <span class="text-xs font-semibold text-slate-200">Published by ${article.author}</span>
@@ -1227,8 +1305,8 @@
                     </div>
                 </section>
 
-                <section class="max-w-4xl mx-auto px-4 lg:px-8 py-8 sm:py-12">
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6 text-slate-800 text-sm sm:text-base leading-relaxed">
+                <section class="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-12">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-10 shadow-sm space-y-6 text-slate-800 text-sm sm:text-base leading-relaxed">
                         ${article.fullContent}
                     </div>
                 </section>
@@ -1240,6 +1318,9 @@
             const pageParam = urlParams.get('page');
             if (pageParam) {
                 activeRoute = pageParam;
+            }
+            if (window.currentUser && typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI(window.currentUser);
             }
             renderAppView();
         });
