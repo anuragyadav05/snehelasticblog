@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /write.html
+Disallow: /admin.html
+
+Sitemap: https://blog.snehelastic.com/sitemap.xml
