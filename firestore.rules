@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function isAdmin() { return signedIn() && request.auth.token.email == '__ADMIN_EMAIL__'; }
+    function isVerifiedAuthor() { return signedIn() && request.auth.token.email in ['__ADMIN_EMAIL__', 'snehelastic@gmail.com']; }
+    function validText(d) {
+      return d.title is string && d.title.size() > 0 && d.title.size() <= 120
+        && d.desc is string && d.desc.size() > 0 && d.desc.size() <= 200
+        && d.body is string && d.body.size() <= 60000
+        && d.category in ['Elastic Basics', 'Rubber & Rubber Tree', 'Spandex & Lycra', 'Threads & Yarns', 'Organic & Colour Elastic', 'Applications & Industry'];
+    }
+    match /articles/{id} {
+      allow read: if resource.data.status == 'live'
+        || (request.auth != null && resource.data.authorUid == request.auth.uid)
+        || isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.verified == isVerifiedAuthor()
+        && validText(request.resource.data);
+      allow update: if isAdmin()
+        || (request.auth != null && resource.data.authorUid == request.auth.uid
+            && resource.data.status in ['pending', 'rejected']
+            && request.resource.data.status == 'pending'
+            && request.resource.data.authorUid == resource.data.authorUid
+            && request.resource.data.verified == resource.data.verified
+            && validText(request.resource.data));
+      allow delete: if isAdmin();
+    }
+  }
+}
